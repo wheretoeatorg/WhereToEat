@@ -155,7 +155,7 @@ public class NearbyFragment extends Fragment {
 			@Override
 			public void onFailure(Throwable t) {
 				progressBar.setVisibility(View.INVISIBLE);
-				Toast.makeText(getActivity(), "Please try some other time", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.server_is_not_available_at_this_time_, Toast.LENGTH_SHORT).show();
 				Log.d(TAG, "Places Failure = " + t);
 			}
 		});

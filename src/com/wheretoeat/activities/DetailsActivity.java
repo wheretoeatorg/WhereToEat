@@ -138,8 +138,6 @@ public class DetailsActivity extends Activity {
 		} else {
 			new Delete().from(FavoriteRestaurant.class).where("resId=?", resId).execute();
 			List<FavoriteRestaurant> list = new Select().from(FavoriteRestaurant.class).execute();
-			Log.d(TAG, list.toString());
-			Toast.makeText(DetailsActivity.this, "Not Checked !", Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -191,7 +189,7 @@ public class DetailsActivity extends Activity {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
 			startActivity(browserIntent);
 		} else {
-			Toast.makeText(DetailsActivity.this, "website not available", Toast.LENGTH_SHORT).show();
+			Toast.makeText(DetailsActivity.this, R.string.website_information_is_not_available_, Toast.LENGTH_SHORT).show();
 		}
 
 	}
@@ -202,11 +200,9 @@ public class DetailsActivity extends Activity {
 		double[] coordinates = GoogleMapHelper.getCurrentlocation(getBaseContext());
 		Intent intent = new Intent();
 		intent.setAction(Intent.ACTION_VIEW);
-		String data = String.format("geo:%s,%s", 37.7764, -122.417);
+		String data = String.format("geo:%s,%s", coordinates[0], coordinates[1]);
 		int zoomLevel = 15;
-
 		data = String.format("%s?z=%s", data, zoomLevel);
-
 		intent.setData(Uri.parse(data));
 		startActivity(intent);
 	}

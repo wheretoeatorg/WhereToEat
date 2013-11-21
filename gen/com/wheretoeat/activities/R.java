@@ -370,10 +370,14 @@ containing a value of this type.
         /**  Long form sign-in button text [CHAR LIMIT=30] 
          */
         public static final int common_signin_button_text_long=0x7f06000e;
+        public static final int couldnot_find_your_current_location_=0x7f060021;
         public static final int hello_world=0x7f060017;
+        public static final int network_is_not_available_=0x7f060022;
         public static final int save=0x7f060018;
+        public static final int server_is_not_available_at_this_time_=0x7f060023;
         public static final int title_activity_login=0x7f06001a;
         public static final int title_details=0x7f06001b;
+        public static final int website_information_is_not_available_=0x7f060020;
     }
     public static final class style {
         /** 

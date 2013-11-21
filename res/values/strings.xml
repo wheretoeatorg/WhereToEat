@@ -25,5 +25,9 @@
     <string name="RES_REF_KEY">001</string>
     <string name="RES_ID_KEY">002</string>
     <string name="RES_LOCATION_KEY">003</string>
+    <string name="website_information_is_not_available_">Website information is not available!</string>
+    <string name="couldnot_find_your_current_location_">Couldnot find your current location !</string>
+    <string name="network_is_not_available_">Network is NOT Available!</string>
+    <string name="server_is_not_available_at_this_time_">Server is not available at this time.</string>
 
 </resources>

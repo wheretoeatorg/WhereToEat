@@ -135,7 +135,6 @@ public class TopRatedFragment extends Fragment {
 				resList.clear();
 				resList = Restaurant.fromPlacesJSON(response);
 				adapter.addAll(resList);
-				// callBackHandler.onMapUpdate(resList);
 				if (progressBar != null) {
 					progressBar.setVisibility(View.INVISIBLE);
 				}

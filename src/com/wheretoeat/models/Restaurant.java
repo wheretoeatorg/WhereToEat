@@ -107,6 +107,8 @@ public class Restaurant {
 
 		if (resultsObj.has("rating")) {
 			res.setRating(resultsObj.getString("rating"));
+		} else {
+			res.setRating("NA");
 		}
 
 		if (resultsObj.has("reference")) {

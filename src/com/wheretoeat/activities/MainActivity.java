@@ -86,7 +86,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 		double[] currentCoordinates = GoogleMapHelper.getCurrentlocation(MainActivity.this);
 		if (currentCoordinates.length == 0) {
 			AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-			dialog.setTitle("Current Location cannot found");
+			dialog.setTitle(R.string.couldnot_find_your_current_location_);
 			dialog.setPositiveButton("OK", new OnClickListener() {
 				@Override
 				public void onClick(DialogInterface dialog, int which) {
@@ -256,7 +256,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 		public void onPageSelected(int position) {
 			Log.d(TAG, "onPageSelected()");
 			if (!Utility.isNetworkAvailable(MainActivity.this)) {
-				Toast.makeText(MainActivity.this, "Network NOT Available", Toast.LENGTH_SHORT).show();
+				Toast.makeText(MainActivity.this, R.string.network_is_not_available_, Toast.LENGTH_SHORT).show();
 				return;
 			}
 			Fragment frag = sectionPagerAdapter.getItem(position);
