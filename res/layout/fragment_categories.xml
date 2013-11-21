@@ -9,8 +9,7 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:entries="@array/categories"
-        android:paddingLeft="30dp" >
+        android:entries="@array/categories" >
     </ListView>
 
 </RelativeLayout>

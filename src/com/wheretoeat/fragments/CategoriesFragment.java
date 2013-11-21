@@ -3,6 +3,7 @@ package com.wheretoeat.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ public class CategoriesFragment extends Fragment {
 
 	@Override
 	public void onAttach(Activity activity) {
+		Log.d(TAG, "onAttach()");
 		super.onAttach(activity);
 		if (activity instanceof OnMapUpdateListener) {
 			callBackHandler = (OnMapUpdateListener) activity;
@@ -31,6 +33,7 @@ public class CategoriesFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.d(TAG, "onCreateView()");
 		View view = inflater.inflate(R.layout.fragment_categories, container, false);
 		lvCategories = (ListView) view.findViewById(R.id.lv_categories);
 		lvCategories.setOnItemClickListener(new OnItemClickListener() {
@@ -45,6 +48,7 @@ public class CategoriesFragment extends Fragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		Log.d(TAG, "onActivityCreated()");
 		super.onActivityCreated(savedInstanceState);
 	}
 

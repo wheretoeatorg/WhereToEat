@@ -13,9 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wheretoeat.activities.R;
@@ -39,6 +40,7 @@ public class NearbyFragment extends Fragment {
 	private RestaurantsAdpater adapter;
 	private OnMapUpdateListener callBackHandler;
 	private View nearbyFragView;
+	private ProgressBar progressBar;
 
 	public interface OnMapUpdateListener {
 		public void onMapUpdate(List<Restaurant> resList);
@@ -50,7 +52,7 @@ public class NearbyFragment extends Fragment {
 
 	@Override
 	public void onAttach(Activity activity) {
-		Log.d(TAG, "OnAttach");
+		Log.d(TAG, "OnAttach()");
 		super.onAttach(activity);
 		if (activity instanceof OnMapUpdateListener) {
 			callBackHandler = (OnMapUpdateListener) activity;
@@ -59,7 +61,7 @@ public class NearbyFragment extends Fragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
-		Log.d(TAG, "onActivityCreated");
+		Log.d(TAG, "onActivityCreated()");
 		super.onActivityCreated(savedInstanceState);
 		resList = new ArrayList<Restaurant>();
 		adapter = new RestaurantsAdpater(getActivity(), resList);
@@ -76,11 +78,12 @@ public class NearbyFragment extends Fragment {
 
 			}
 		});
+		searchPlacesApi();
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		Log.d(TAG, "onCreateView");
+		Log.d(TAG, "onCreateView()");
 		nearbyFragView = inflater.inflate(R.layout.fragment_nearby, container, false);
 		nearbyFragView.setTag("nearby");
 		initViews(nearbyFragView);
@@ -89,13 +92,13 @@ public class NearbyFragment extends Fragment {
 
 	private void initViews(View nearbyFragView) {
 		listView = (ListView) nearbyFragView.findViewById(R.id.lv_nearby_res);
+		progressBar = (ProgressBar) nearbyFragView.findViewById(R.id.pb_nearby);
 	}
 
 	@Override
 	public void onStart() {
-		Log.d(TAG, "onStart");
+		Log.d(TAG, "onStart()");
 		super.onStart();
-		searchPlacesApi();
 	}
 
 	private void searchYelpApi() {
@@ -105,9 +108,7 @@ public class NearbyFragment extends Fragment {
 
 			@Override
 			public void onSuccess(JSONObject res) {
-				Log.d(TAG, "JSONObject: " + res.toString());
 				List<Restaurant> restauList = Restaurant.fromJSON(res);
-				Log.d(TAG, "resList size: " + resList.size());
 				adapter.addAll(restauList);
 			}
 
@@ -122,7 +123,7 @@ public class NearbyFragment extends Fragment {
 		if (!Utility.isNetworkAvailable(getActivity())) {
 			return;
 		}
-		Log.d(TAG, "NearbyFragmentSearchApi");
+		Log.d(TAG, "NearbyFragmentSearchApi()");
 		String searchName = SharedPrefHelper.getSearchName(getActivity());
 		double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
 		PlacesClient client = RestClientApplication.getPlacesClient();
@@ -135,21 +136,27 @@ public class NearbyFragment extends Fragment {
 		if (!searchName.equalsIgnoreCase(SharedPrefHelper.NONE)) {
 			filterOptions.setName(searchName);
 		}
-		
+		if (progressBar != null) {
+			progressBar.setVisibility(View.VISIBLE);
+		}
 		client.searchRestaurants(filterOptions, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
-				Log.d(TAG, "Places response = " + response);
 				adapter.clear();
 				resList.clear();
 				resList = Restaurant.fromPlacesJSON(response);
 				adapter.addAll(resList);
+				if (progressBar != null) {
+					progressBar.setVisibility(View.INVISIBLE);
+				}
 				// callBackHandler.onMapUpdate(resList);
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
-				Log.d(TAG, "Places Failure = " + t.getMessage());
+				progressBar.setVisibility(View.INVISIBLE);
+				Toast.makeText(getActivity(), "Please try some other time", Toast.LENGTH_SHORT).show();
+				Log.d(TAG, "Places Failure = " + t);
 			}
 		});
 	}

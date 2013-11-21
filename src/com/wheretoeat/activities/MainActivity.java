@@ -15,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -65,6 +66,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.d(TAG, "onCreate()");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		// create Pager Adapter.
@@ -104,6 +106,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.d(TAG, "onCreateOptionsMenu()");
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
@@ -111,6 +114,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+		Log.d(TAG, "onOptionsItemSelected()");
 		if (item.getItemId() == R.id.action_filter) {
 			showFilterDialog();
 		}
@@ -119,6 +123,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	// display dialog box
 	private void showFilterDialog() {
+		Log.d(TAG, "showFilterDialog()");
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
 		LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		dialogView = inflater.inflate(R.layout.dialog_filter, null, true);
@@ -132,6 +137,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	// Initialize the views of dialog
 	private void initDialogView() {
+		Log.d(TAG, "initDialogView()");
 		price1 = (ToggleButton) dialogView.findViewById(R.id.price1);
 		price2 = (ToggleButton) dialogView.findViewById(R.id.price2);
 		price3 = (ToggleButton) dialogView.findViewById(R.id.price3);
@@ -143,6 +149,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	// Populate the values in dialogbox stored from SharedPrefs
 	private void populateDialotValues() {
+		Log.d(TAG, "populateDialotValues()");
 		price1.setChecked(SharedPrefHelper.getPrice1Pref(MainActivity.this));
 		price2.setChecked(SharedPrefHelper.getPrice2Pref(MainActivity.this));
 		price3.setChecked(SharedPrefHelper.getPrice3Pref(MainActivity.this));
@@ -156,6 +163,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 	OnClickListener dialogOnClickListener = new OnClickListener() {
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
+			Log.d(TAG, "onClick()");
 
 			switch (which) {
 			// Save button
@@ -182,7 +190,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 	};
 
 	public void onClickZoomOutIn(View v) {
-
+		Log.d(TAG, "onClickZoomOutIn()");
 		int mainLayoutHeight = (findViewById(R.id.main_layout)).getHeight();
 		int id = v.getId();
 		ImageButton imgBtn = null;
@@ -236,7 +244,6 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 	}
 
 	private String getBtnTag(ImageButton btn) {
-
 		if (btn != null && btn.getTag() != null) {
 			return btn.getTag().toString();
 		}
@@ -247,6 +254,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 	OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
 		@Override
 		public void onPageSelected(int position) {
+			Log.d(TAG, "onPageSelected()");
 			if (!Utility.isNetworkAvailable(MainActivity.this)) {
 				Toast.makeText(MainActivity.this, "Network NOT Available", Toast.LENGTH_SHORT).show();
 				return;
@@ -256,7 +264,6 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 			if (frag instanceof NearbyFragment) {
 				resList = ((NearbyFragment) frag).getResList();
 				onMapUpdate(resList);
-
 			} else if (frag instanceof TopRatedFragment) {
 				resList = ((TopRatedFragment) frag).getResList();
 				onMapUpdate(resList);
@@ -278,6 +285,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	@Override
 	public void onMapUpdate(List<Restaurant> resList) {
+		Log.d(TAG, "onMapUpdate()");
 		if (googleMap != null) {
 			GoogleMapHelper.clearAllMarkers(googleMap);
 			double[] currentCoordinates = GoogleMapHelper.getCurrentlocation(MainActivity.this);
@@ -296,6 +304,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	@Override
 	public void onDetailSelected(String resRef, String resId, double[] coords) {
+		Log.d(TAG, "onDetailSelected()");
 		Intent i = new Intent(this, DetailsActivity.class);
 		i.putExtra(Constants.RES_REF, resRef);
 		i.putExtra(Constants.RES_ID, resId);
@@ -305,9 +314,14 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
 	@Override
 	public void onCategorySelected(String category) {
+		Log.d(TAG, "onCategorySelected()");
 		SharedPrefHelper.addSearchName(MainActivity.this, category);
 		getActionBar().setTitle(category);
 		viewPager.setCurrentItem(1);
+		Fragment frag = sectionPagerAdapter.getItem(1);
+		if (frag instanceof NearbyFragment) {
+			((NearbyFragment) frag).searchPlacesApi();
+		}
 	}
 
 }

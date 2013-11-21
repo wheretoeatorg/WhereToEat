@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.wheretoeat.activities.R;
@@ -36,6 +38,7 @@ public class TopRatedFragment extends Fragment {
 	private ListView listView;
 	private RestaurantsAdpater adapter;
 	private OnMapUpdateListener callBackHandler;
+	private ProgressBar progressBar;
 
 	@Override
 	public void onAttach(Activity activity) {
@@ -47,6 +50,7 @@ public class TopRatedFragment extends Fragment {
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
+		Log.d(TAG, "onActivityCreated()");
 		super.onActivityCreated(savedInstanceState);
 		listView = (ListView) getActivity().findViewById(R.id.lv_toprated_res);
 		resList = new ArrayList<Restaurant>();
@@ -61,41 +65,44 @@ public class TopRatedFragment extends Fragment {
 				callBackHandler.onDetailSelected(resRef, resId, coords);
 			}
 		});
+		searchPlacesApi();
 	}
 
 	@Override
 	public void onStart() {
 		super.onStart();
-		searchPlacesApi();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
-		Log.d(TAG, "TopRatedOnResume");
+		Log.d(TAG, "onResume()");
 	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		return inflater.inflate(R.layout.fragment_toprated, container, false);
+		View view = inflater.inflate(R.layout.fragment_toprated, container, false);
+		progressBar = (ProgressBar) view.findViewById(R.id.pb_toprated);
+		return view;
 	}
 
 	private void searchYelpApi() {
+		Log.d(TAG, "searchYelpApi()");
 		double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
 		YelpClient client = RestClientApplication.getYelpClient();
 		client.searchRestaurants("restaurants", "2", coords[0], coords[1], new JsonHttpResponseHandler() {
 
 			@Override
 			public void onSuccess(JSONObject res) {
-				Log.d(TAG, "JSONObject: " + res.toString());
+				Log.d(TAG, "onSuccess()");
 				List<Restaurant> restauList = Restaurant.fromJSON(res);
-				Log.d(TAG, "resList size: " + resList.size());
 				adapter.addAll(restauList);
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
-				Log.e(TAG, "Erros - " + t.getMessage());
+				Toast.makeText(getActivity(), "Please try again!", Toast.LENGTH_SHORT).show();
+				Log.e(TAG, "onFailure() :" + t);
 			}
 		});
 	}
@@ -104,7 +111,7 @@ public class TopRatedFragment extends Fragment {
 		if (!Utility.isNetworkAvailable(getActivity())) {
 			return;
 		}
-		Log.d(TAG, "TopRatedFragmentSearchApi");
+		Log.d(TAG, "searchPlacesApi()");
 		String searchName = SharedPrefHelper.getSearchName(getActivity());
 		double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
 		PlacesClient client = RestClientApplication.getPlacesClient();
@@ -117,20 +124,26 @@ public class TopRatedFragment extends Fragment {
 			filOpt.setName(searchName);
 		}
 
+		if (progressBar != null) {
+			progressBar.setVisibility(View.VISIBLE);
+		}
 		client.searchRestaurants(filOpt, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
-				Log.d(TAG, "Places response = " + response);
+				Log.d(TAG, "onSuccess()");
 				adapter.clear();
 				resList.clear();
 				resList = Restaurant.fromPlacesJSON(response);
 				adapter.addAll(resList);
 				// callBackHandler.onMapUpdate(resList);
+				if (progressBar != null) {
+					progressBar.setVisibility(View.INVISIBLE);
+				}
 			}
 
 			@Override
 			public void onFailure(Throwable t) {
-				Log.d(TAG, "Places Failure = " + t.getMessage());
+				Log.d(TAG, "onFailure() : " + t);
 			}
 		});
 	}

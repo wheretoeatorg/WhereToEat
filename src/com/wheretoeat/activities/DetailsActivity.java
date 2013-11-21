@@ -54,6 +54,7 @@ public class DetailsActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.d(TAG, "onCreate()");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
 		resRef = getIntent().getStringExtra(Constants.RES_REF);
@@ -69,6 +70,7 @@ public class DetailsActivity extends Activity {
 	}
 
 	private void refreshFavSelected() {
+		Log.d(TAG, "refreshFavSelected()");
 		FavoriteRestaurant fav = new Select().from(FavoriteRestaurant.class).where("resId = ?", resId).executeSingle();
 		if (fav != null) {
 			tglBtnFav.setChecked(true);
@@ -76,6 +78,7 @@ public class DetailsActivity extends Activity {
 	}
 
 	private void initViews() {
+		Log.d(TAG, "initViews()");
 		tglBtnFav = (ToggleButton) findViewById(R.id.tglBtnFav);
 		tvReviewCount = (TextView) findViewById(R.id.tvReviewCount);
 		tvCategories = (TextView) findViewById(R.id.tvCategories);
@@ -86,6 +89,7 @@ public class DetailsActivity extends Activity {
 	}
 
 	private void setupRestaurant(Restaurant rest) {
+		Log.d(TAG, "setupRestaurant()");
 		if (rest == null) {
 			return;
 		}
@@ -118,6 +122,7 @@ public class DetailsActivity extends Activity {
 	}
 
 	public void onClickFavorite(View v) {
+		Log.d(TAG, "onClickFavorite()");
 		boolean isChecked = tglBtnFav.isChecked();
 		if (isChecked) {
 			FavoriteRestaurant fav = new FavoriteRestaurant();
@@ -141,11 +146,13 @@ public class DetailsActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+		Log.d(TAG, "onCreateOptionsMenu()");
 		getMenuInflater().inflate(R.menu.details, menu);
 		return true;
 	}
 
 	private void fetchDetails(String ref) {
+		Log.d(TAG, "fetchDetails()");
 		FilterOptions filOpt = new FilterOptions();
 		filOpt.setReference(ref);
 
@@ -153,7 +160,6 @@ public class DetailsActivity extends Activity {
 		client.getDetails(filOpt, new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(JSONObject response) {
-				// Log.d(TAG, "Places response = " + response);
 				Restaurant r = null;
 				try {
 					r = Restaurant.fromJson(response);
@@ -165,13 +171,14 @@ public class DetailsActivity extends Activity {
 
 			@Override
 			public void onFailure(Throwable t) {
-				Log.d(TAG, "Places Failure = " + t.getMessage());
+				Log.d(TAG, "onFailure() : " + t);
 			}
 		});
 	}
 
 	// phone call intent, initiate the call.
 	public void callNumber(View v) {
+		Log.d(TAG, "callNumber()");
 		Intent callIntent = new Intent(Intent.ACTION_CALL);
 		callIntent.setData(Uri.parse("tel:" + phoneNumber));
 		startActivity(callIntent);
@@ -179,6 +186,7 @@ public class DetailsActivity extends Activity {
 
 	// website intent
 	public void openSite(View v) {
+		Log.d(TAG, "openSite()");
 		if (!Utility.isStringBlank(website)) {
 			Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
 			startActivity(browserIntent);
@@ -190,6 +198,7 @@ public class DetailsActivity extends Activity {
 
 	// direction intent
 	public void getMap(View v) {
+		Log.d(TAG, "getMap()");
 		double[] coordinates = GoogleMapHelper.getCurrentlocation(getBaseContext());
 		Intent intent = new Intent();
 		intent.setAction(Intent.ACTION_VIEW);
@@ -203,7 +212,7 @@ public class DetailsActivity extends Activity {
 	}
 
 	public void launchGoogleMaps(View v) {
-		// "geo:0,0?q="+direction;
+		Log.d(TAG, "launchGoogleMaps()");
 		String format = String.format("geo:0,0?q=%s", direction);
 		Uri uri = Uri.parse(format);
 		Intent intent = new Intent(Intent.ACTION_VIEW, uri);

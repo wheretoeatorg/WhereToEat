@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import com.wheretoeat.models.FavoriteRestaurant;
 import com.wheretoeat.models.Restaurant;
 
 public class FavoritesFragment extends Fragment {
+
+	private static final String TAG = "FavoritesFragment";
 	ListView lvFavRests;
 	List<FavoriteRestaurant> listFav;
 	RestaurantsAdpater adapter;
@@ -36,15 +39,25 @@ public class FavoritesFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.d(TAG, "onCreateView()");
 		View view = inflater.inflate(R.layout.fragment_favorite, container, false);
 		lvFavRests = (ListView) view.findViewById(R.id.lv_fav_res);
 		return view;
 	}
 
 	@Override
+	public void onStart() {
+		super.onStart();
+		Log.d(TAG, "onStart()");
+		resList.clear();
+		resList = getFavRestaurants();
+
+	}
+
+	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-
+		Log.d(TAG, "onActivityCreated()");
 		adapter = new RestaurantsAdpater(getActivity(), getFavRestaurants());
 		lvFavRests.setAdapter(adapter);
 		lvFavRests.setOnItemClickListener(new OnItemClickListener() {
@@ -58,7 +71,6 @@ public class FavoritesFragment extends Fragment {
 		});
 
 		lvFavRests.setOnItemLongClickListener(new OnItemLongClickListener() {
-
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
 				Restaurant rest = resList.get(position);
@@ -72,6 +84,7 @@ public class FavoritesFragment extends Fragment {
 	}
 
 	public List<Restaurant> getFavRestaurants() {
+		Log.d(TAG, "getFavRestaurants()");
 		List<FavoriteRestaurant> favList = new Select().from(FavoriteRestaurant.class).execute();
 		resList.clear();
 		for (FavoriteRestaurant fav : favList) {
@@ -92,6 +105,7 @@ public class FavoritesFragment extends Fragment {
 	}
 
 	public void removeFavRestaurant(Restaurant rest) {
+		Log.d(TAG, "removeFavRestaurant()");
 		if (rest != null && !rest.getResId().isEmpty()) {
 			new Delete().from(FavoriteRestaurant.class).where("resId=?", rest.getResId()).execute();
 		}
@@ -103,7 +117,7 @@ public class FavoritesFragment extends Fragment {
 
 	// display dialog box
 	private void showFilterDialog() {
-
+		Log.d(TAG, "showFilterDialog()");
 		AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
 		LayoutInflater inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		dialogView = inflater.inflate(R.layout.dialog_restaurants_notes, null, true);
