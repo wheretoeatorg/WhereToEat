@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <!--
+         <ImageView
+        android:id="@+id/img_res"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_launcher" />
+    -->
+
+    <TextView
+        android:id="@+id/tv_numbers"
+        android:layout_width="35dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_margin="5dp"
+        android:gravity="center"
+        android:textColor="#DF3A01"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/tv_numbers"
+        android:layout_margin="5dp"
+        android:layout_toLeftOf="@+id/tv_miles"
+        android:layout_toRightOf="@id/tv_numbers"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_name"
+        android:layout_margin="2dp"
+        android:layout_toLeftOf="@+id/tv_ratings"
+        android:layout_toRightOf="@id/tv_numbers" />
+
+    <TextView
+        android:id="@id/tv_miles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/tv_name"
+        android:layout_margin="5dp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@id/tv_ratings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_body"
+        android:layout_alignBottom="@+id/tv_body"
+        android:layout_alignRight="@+id/tv_miles"
+        android:layout_margin="5dp"
+        android:textSize="18sp" />
+
+</RelativeLayout>

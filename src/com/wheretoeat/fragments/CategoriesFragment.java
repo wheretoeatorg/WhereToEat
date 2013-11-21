@@ -1,0 +1,51 @@
+package com.wheretoeat.fragments;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ListView;
+
+import com.wheretoeat.activities.R;
+import com.wheretoeat.fragments.NearbyFragment.OnMapUpdateListener;
+
+public class CategoriesFragment extends Fragment {
+
+	protected static final String TAG = "CategoriesFragment";
+	ListView lvCategories;
+
+	private OnMapUpdateListener callBackHandler;
+
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		if (activity instanceof OnMapUpdateListener) {
+			callBackHandler = (OnMapUpdateListener) activity;
+		}
+
+	}
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View view = inflater.inflate(R.layout.fragment_categories, container, false);
+		lvCategories = (ListView) view.findViewById(R.id.lv_categories);
+		lvCategories.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				String item = parent.getItemAtPosition(position).toString();
+				callBackHandler.onCategorySelected(item);
+			}
+		});
+		return view;
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+	}
+
+}

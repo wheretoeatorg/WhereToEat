@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WhereToEat</string>
+    <string name="action_filter">Filter</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="save">Save</string>
+    <string name="cancle">Cancle</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="title_details">Details</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="categories">
+        <item name="maxicon">Mexican</item>
+        <item name="cafe">Cafe</item>
+        <item name="bar">Bar</item>
+        <item name="Chinese">Chinese</item>
+        <item name="indian">Indian</item>
+        <item name="thai">Thai</item>
+        <item name="italian">Italian</item>
+        <item name="Pizza">Pizza</item>
+        <item name="burger">Burger</item>
+    </string-array>
+
+    <string name="RES_REF_KEY">001</string>
+    <string name="RES_ID_KEY">002</string>
+    <string name="RES_LOCATION_KEY">003</string>
+
+</resources>

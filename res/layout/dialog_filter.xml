@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/lbl_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
+        android:text="Price" />
+
+    <LinearLayout
+        android:id="@+id/layout_price_btns"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/lbl_price"
+        android:orientation="horizontal"
+        android:padding="5dp" >
+
+        <ToggleButton
+            android:id="@+id/price1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="$"
+            android:textOn="$" />
+
+        <ToggleButton
+            android:id="@+id/price2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="$$"
+            android:textOn="$$" />
+
+        <ToggleButton
+            android:id="@+id/price3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="$$$"
+            android:textOn="$$$" />
+
+        <ToggleButton
+            android:id="@+id/price4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textOff="$$$$"
+            android:textOn="$$$$" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/lbl_show_visited"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/layout_price_btns"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:text="Show Visited" />
+
+    <Switch
+        android:id="@+id/swtch_show_visited"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/lbl_show_visited"
+        android:layout_margin="5dp"
+        android:padding="5dp" />
+
+    <TextView
+        android:id="@+id/lbl_open_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/lbl_show_visited"
+        android:layout_margin="5dp"
+        android:padding="5dp"
+        android:text="Open Now" />
+
+    <Switch
+        android:id="@+id/swtch_open_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/lbl_open_now"
+        android:layout_margin="5dp"
+        android:padding="5dp" />
+
+</RelativeLayout>

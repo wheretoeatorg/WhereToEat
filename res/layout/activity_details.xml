@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp" >
+
+    <TextView
+        android:id="@+id/tvCategories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvRestaurantName"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvRestaurantName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tvCategories"
+        android:layout_below="@+id/tvCategories"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="10sp" />
+
+    <ToggleButton
+        android:id="@+id/tglBtnFav"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/toggle_check"
+        android:contentDescription="favorite"
+        android:onClick="onClickFavorite"
+        android:textOff=""
+        android:textOn="" />
+
+    <ImageButton
+        android:id="@+id/imgBtnSeeWebSite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/tglBtnFav"
+        android:layout_margin="5dp"
+        android:background="@null"
+        android:contentDescription="see Website"
+        android:onClick="openSite"
+        android:src="@drawable/ic_see_website_blue" />
+
+    <ImageButton
+        android:id="@+id/imgBtnCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/imgBtnSeeWebSite"
+        android:layout_margin="10dp"
+        android:background="@null"
+        android:contentDescription="Call"
+        android:onClick="callNumber"
+        android:src="@drawable/ic_call_green" />
+
+    <ImageButton
+        android:id="@+id/imgBtnGetDirection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/imgBtnCall"
+        android:layout_margin="10dp"
+        android:background="@null"
+        android:contentDescription="Get Direction"
+        android:onClick="launchGoogleMaps"
+        android:src="@drawable/ic_map_round" />
+
+    <TextView
+        android:id="@+id/tvDetailviewRatings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAddress"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center"
+        android:text="3.8"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/holo_orange_dark"
+        android:textSize="30sp" />
+
+    <RatingBar
+        android:id="@+id/ivRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/tvDetailviewRatings"
+        android:layout_margin="10dp"
+        android:clickable="false"
+        android:isIndicator="true" />
+
+    <TextView
+        android:id="@+id/tvReviewCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivRating"
+        android:text="0 Reviews"
+        android:textColor="@android:color/darker_gray"
+        android:textSize="20sp" />
+
+    <ListView
+        android:id="@+id/lvReviewsList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imgBtnGetDirection" >
+    </ListView>
+
+</RelativeLayout>
