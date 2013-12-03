@@ -5,10 +5,7 @@
 
     <ListView
         android:id="@+id/lv_fav_res"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
+        style="@style/custom_list_view" >
     </ListView>
 
 </RelativeLayout>

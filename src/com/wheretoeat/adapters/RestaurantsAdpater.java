@@ -38,7 +38,7 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> {
 		View view = convertView;
 		if (view == null) {
 			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = inflater.inflate(R.layout.fragment_restaurant_item, null);
+			view = inflater.inflate(R.layout.list_restaurant_item, null);
 		}
 		initViews(view);
 		tvNumbers.setText(position + 1 + "");

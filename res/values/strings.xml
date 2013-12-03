@@ -11,6 +11,7 @@
     <string name="action_settings">Settings</string>
 
     <string-array name="categories">
+        <item name="all">All</item>
         <item name="maxicon">Mexican</item>
         <item name="cafe">Cafe</item>
         <item name="bar">Bar</item>
@@ -28,6 +29,6 @@
     <string name="website_information_is_not_available_">Website information is not available!</string>
     <string name="couldnot_find_your_current_location_">Couldnot find your current location !</string>
     <string name="network_is_not_available_">Network is NOT Available!</string>
-    <string name="server_is_not_available_at_this_time_">Server is not available at this time.</string>
+    <string name="server_is_not_available_at_this_time_">couldnot connect to server.</string>
 
 </resources>

@@ -17,4 +17,50 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
+    <style name="LargerFont">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="LargerFont.white">
+        <item name="android:textColor">#ffffff</item>
+    </style>
+
+    <style name="LargerFont.white.bold">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="LargerFont.white.bold.DarkBackgrod">
+        <item name="android:background">@drawable/dark_grd</item>
+    </style>
+
+    <style name="custom_list_view" parent="@android:style/Widget.ListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:divider">@null</item>
+        <item name="android:dividerHeight">0dp</item>
+    </style>
+
+    <style name="custom_list_view2" parent="@android:style/Widget.ListView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">25sp</item>
+        <item name="android:paddingLeft">20sp</item>
+    </style>
+
+    <style name="custom_header">
+        <item name="android:background">@drawable/solid_color_shape</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="custom_header_linear_layout_children">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
 </resources>

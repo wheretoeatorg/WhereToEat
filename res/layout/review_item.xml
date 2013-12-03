@@ -11,8 +11,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvDate"
         android:text="Review"
-        android:textColor="@android:color/background_dark"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/background_dark" />
 
     <TextView
         android:id="@+id/tvDate"
@@ -31,10 +31,10 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="3.5"
         android:fontFamily="sans-serif"
-        android:textColor="@android:color/holo_orange_dark"
+        android:text="3.5"
         android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/holo_orange_dark"
         android:textStyle="bold" />
 
     <TextView

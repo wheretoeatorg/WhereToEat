@@ -41,6 +41,7 @@ public class NearbyFragment extends Fragment {
 	private OnMapUpdateListener callBackHandler;
 	private View nearbyFragView;
 	private ProgressBar progressBar;
+	private boolean firstLaunch = false;
 
 	public interface OnMapUpdateListener {
 		public void onMapUpdate(List<Restaurant> resList);
@@ -55,7 +56,9 @@ public class NearbyFragment extends Fragment {
 		Log.d(TAG, "OnAttach()");
 		super.onAttach(activity);
 		if (activity instanceof OnMapUpdateListener) {
+			firstLaunch = true;
 			callBackHandler = (OnMapUpdateListener) activity;
+
 		}
 	}
 
@@ -149,7 +152,10 @@ public class NearbyFragment extends Fragment {
 				if (progressBar != null) {
 					progressBar.setVisibility(View.INVISIBLE);
 				}
-				// callBackHandler.onMapUpdate(resList);
+
+				if (firstLaunch) {
+					callBackHandler.onMapUpdate(resList);
+				}
 			}
 
 			@Override
