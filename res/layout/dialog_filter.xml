@@ -53,6 +53,7 @@
             android:textOn="$$$$" />
     </LinearLayout>
 
+    <!--
     <TextView
         android:id="@+id/lbl_show_visited"
         android:layout_width="wrap_content"
@@ -71,13 +72,14 @@
         android:layout_alignTop="@id/lbl_show_visited"
         android:layout_margin="5dp"
         android:padding="5dp" />
+    -->
 
     <TextView
         android:id="@+id/lbl_open_now"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/lbl_show_visited"
+        android:layout_below="@id/layout_price_btns"
         android:layout_margin="5dp"
         android:padding="5dp"
         android:text="Open Now" />

@@ -50,19 +50,19 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
     private static final String TAG = "MainFragmentActivity";
     private static int DETAILS_REQUEST_CODE = 1;
     final static int ZOOM_LEVEL = 16;
-    SectionPagerAdapter sectionPagerAdapter;
-    ViewPager viewPager;
-    ActionBar actionBar;
-    GoogleMap googleMap;
-    SupportMapFragment supportMapFragment;
-    PagerTabStrip page;
-    View dialogView;
+    private SectionPagerAdapter sectionPagerAdapter;
+    private ViewPager viewPager;
+    private ActionBar actionBar;
+    private GoogleMap googleMap;
+    private SupportMapFragment supportMapFragment;
+    private PagerTabStrip page;
+    private View dialogView;
     // Dialog Views
-    ToggleButton price1;
-    ToggleButton price2;
-    ToggleButton price3;
-    ToggleButton price4;
-    Switch swtchShowVisited;
+    private ToggleButton price1;
+    private ToggleButton price2;
+    private ToggleButton price3;
+    private ToggleButton price4;
+    // Switch swtchShowVisited;
     Switch swtchOpenNow;
 
     @Override
@@ -75,7 +75,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         // get ViewPager.
         viewPager = (ViewPager) findViewById(R.id.viewPagerCategory);
         page = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-        
+
         // Set Listener for ViewPager
         viewPager.setOnPageChangeListener(pageChangeListener);
         // Set Adapter on ViewPager
@@ -120,6 +120,8 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         Log.d(TAG, "onOptionsItemSelected()");
         if (item.getItemId() == R.id.action_filter) {
             showFilterDialog();
+        } else if (item.getItemId() == R.id.action_refresh) {
+            onClickedPageRefresh();
         }
         return true;
     }
@@ -146,7 +148,8 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         price2 = (ToggleButton) dialogView.findViewById(R.id.price2);
         price3 = (ToggleButton) dialogView.findViewById(R.id.price3);
         price4 = (ToggleButton) dialogView.findViewById(R.id.price4);
-        swtchShowVisited = (Switch) dialogView.findViewById(R.id.swtch_show_visited);
+        // swtchShowVisited = (Switch)
+        // dialogView.findViewById(R.id.swtch_show_visited);
         swtchOpenNow = (Switch) dialogView.findViewById(R.id.swtch_open_now);
         populateDialotValues();
     }
@@ -158,7 +161,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         price2.setChecked(SharedPrefHelper.getPrice2Pref(MainActivity.this));
         price3.setChecked(SharedPrefHelper.getPrice3Pref(MainActivity.this));
         price4.setChecked(SharedPrefHelper.getPrice4Pref(MainActivity.this));
-        swtchShowVisited.setChecked(SharedPrefHelper.isShowVisitedPrefs(MainActivity.this));
+        // swtchShowVisited.setChecked(SharedPrefHelper.isShowVisitedPrefs(MainActivity.this));
         swtchOpenNow.setChecked(SharedPrefHelper.getOpenNowPref(MainActivity.this));
 
     }
@@ -179,7 +182,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
                     filters.setPrice3(price3.isChecked());
                     filters.setPrice4(price4.isChecked());
                     filters.setOpenNow(swtchOpenNow.isChecked());
-                    filters.setShowVisited(swtchShowVisited.isChecked());
+                    // filters.setShowVisited(swtchShowVisited.isChecked());
 
                     SharedPrefHelper.AddFiltersSharedPrefs(filters, MainActivity.this);
 
@@ -330,6 +333,23 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         Fragment frag = sectionPagerAdapter.getItem(1);
         if (frag instanceof NearbyFragment) {
             ((NearbyFragment) frag).searchPlacesApi();
+        }
+    }
+
+    public void onClickedPageRefresh() {
+        Log.d(TAG, "onClickedPageRefresh()");
+        int position = viewPager.getCurrentItem();
+        Fragment frag = sectionPagerAdapter.getItem(position);
+        String category = getActionBar().getTitle().toString();
+        if (!category.equalsIgnoreCase("WhereToEat") && !category.equalsIgnoreCase("ALL")) {
+            SharedPrefHelper.addSearchName(MainActivity.this, category);
+        } else {
+            SharedPrefHelper.addSearchName(MainActivity.this, "");
+        }
+        if (frag instanceof NearbyFragment) {
+            ((NearbyFragment) frag).searchPlacesApi();
+        } else if (frag instanceof TopRatedFragment) {
+            ((TopRatedFragment) frag).searchPlacesApi();
         }
     }
 
