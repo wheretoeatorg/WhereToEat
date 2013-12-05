@@ -1,0 +1,54 @@
+buildscript {
+  repositories {
+    mavenCentral()
+  }
+
+  dependencies {
+    classpath 'com.android.tools.build:gradle:0.4'
+  }
+}
+
+apply plugin: 'android'
+
+android {
+  compileSdkVersion 18
+  buildToolsVersion '17.0'
+  
+  signingConfigs {
+        debug {
+            storeFile file("debug.keystore")
+        }
+
+        releaseconfig {
+            storeFile file("YOURRELEASE.keystore")
+            storePassword "xxxxxxx"
+            keyAlias "DistributionKeyStoreAlias"
+            keyPassword "xxxxx"
+        }
+	}
+	
+	buildTypes {
+        foo {
+            debuggable true
+            jniDebugBuild true
+            signingConfig signingConfigs.releaseconfig
+        }
+    }
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ['src']
+      resources.srcDirs = ['src']
+      renderscript.srcDirs = ['src']
+      res.srcDirs = ['res']
+      assets.srcDirs = ['assets']
+    }
+
+    instrumentTest.setRoot('tests')
+  }
+
+  dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar', exclude: 'android-support-v4.jar')
+    compile 'com.google.android.gms:play-services:3.2.25'
+  }
+}
