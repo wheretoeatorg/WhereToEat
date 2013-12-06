@@ -7,7 +7,7 @@ and limited results to make up your mind easily.
 It also provides the informations (like website, phone number, directions to the place and reviews from other users).
 
 
-
+<a href="http://imgur.com/xx4x9FB"><img src="http://i.imgur.com/xx4x9FB.png" title="Hosted by imgur.com"/></a>
 
 
 License
