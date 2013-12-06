@@ -20,15 +20,15 @@ android {
         }
 
         releaseconfig {
-            storeFile file("YOURRELEASE.keystore")
-            storePassword "xxxxxxx"
+            storeFile file("wheretoeat-release-key.keystore")
+            storePassword "rgpatel7734"
             keyAlias "DistributionKeyStoreAlias"
-            keyPassword "xxxxx"
+            keyPassword "rgpatel7734"
         }
 	}
 	
 	buildTypes {
-        foo {
+        wheretoeatrelease {
             debuggable true
             jniDebugBuild true
             signingConfig signingConfigs.releaseconfig
