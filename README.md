@@ -6,7 +6,8 @@ and limited results to make up your mind easily.
 
 It also provides the informations (like website, phone number, directions to the place and reviews from other users).
 
-
+<img src="http://i.imgur.com/wm8cQDX.png" height="300" />
+&nbsp;&nbsp;
 <img src="http://i.imgur.com/OcSr1Tk.png" height="300" />
 &nbsp;&nbsp;
 <img src="http://i.imgur.com/8r8a0i9.png" height="300" />
