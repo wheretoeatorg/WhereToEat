@@ -6,30 +6,25 @@
 
     <TextView
         android:id="@+id/tvRestaurantName"
+        style="@style/largeBoldTextAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/tglBtnFav"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold" />
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/tvCategories"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvRestaurantName"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:layout_below="@+id/tvRestaurantName" />
 
     <TextView
         android:id="@+id/tvAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/tvCategories"
-        android:layout_below="@+id/tvCategories"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="10sp" />
+        android:layout_below="@+id/tvCategories" />
 
     <ListView
         android:id="@+id/lvReviewsList"

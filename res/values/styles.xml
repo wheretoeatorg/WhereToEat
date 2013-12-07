@@ -14,10 +14,15 @@
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
+
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+        <item name="android:textViewStyle">@style/Widget.TextView.Custom</item>
+        <item name="android:imageButtonStyle">@style/customImageButton</item>
     </style>
-    
-    
+
+    <style name="Widget.TextView.Custom" parent="android:Widget.TextView">
+        <item name="android:textAppearance">?android:attr/textAppearanceSmall</item>
+    </style>
 
     <style name="LargerFont">
         <item name="android:textSize">18sp</item>
@@ -29,6 +34,22 @@
 
     <style name="LargerFont.white.bold">
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="mediumBoldTextAppearance">
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="largeBoldTextAppearance">
+        <item name="android:textAppearance">?android:attr/textAppearanceLarge</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@android:color/holo_orange_dark</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="customImageButton" parent="android:Widget.ImageButton">
+        <item name="android:background">@null</item>
     </style>
 
     <style name="LargerFont.white.bold.DarkBackgrod">

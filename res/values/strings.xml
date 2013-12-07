@@ -31,5 +31,11 @@
     <string name="couldnot_find_your_current_location_">Couldnot find your current location !</string>
     <string name="network_is_not_available_">Network is NOT Available!</string>
     <string name="server_is_not_available_at_this_time_">couldnot connect to server.</string>
+    <string name="see_website">see Website</string>
+    <string name="call">Call</string>
+    <string name="get_direction">Get Direction</string>
+    <string name="favorite">favorite</string>
+    <string name="_0_reviews">0 Reviews</string>
+    <string name="default_ratings">0.0</string>
 
 </resources>

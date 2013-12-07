@@ -5,14 +5,12 @@
 
     <TextView
         android:id="@+id/tvDetailviewRatings"
+        style="@style/largeBoldTextAppearance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="3.8"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/holo_orange_dark"
-        android:textSize="30sp" />
+        android:text="@string/default_ratings" />
 
     <RatingBar
         android:id="@+id/ivRating"
@@ -29,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/ivRating"
-        android:text="0 Reviews"
+        android:text="@string/_0_reviews"
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp" />
 
@@ -40,12 +38,12 @@
         android:orientation="horizontal" >
 
         <ToggleButton
-            android:id="@id/tglBtnFav"
+            android:id="@+id/tglBtnFav"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="0.21"
             android:background="@drawable/toggle_check"
-            android:contentDescription="favorite"
+            android:contentDescription="@string/favorite"
             android:onClick="onClickFavorite"
             android:textOff=""
             android:textOn="" />
@@ -53,24 +51,21 @@
         <ImageButton
             android:id="@+id/imgBtnSeeWebSite"
             style="@style/custom_header_linear_layout_children"
-            android:background="@null"
-            android:contentDescription="see Website"
+            android:contentDescription="@string/see_website"
             android:onClick="openSite"
             android:src="@drawable/ic_see_website_blue" />
 
         <ImageButton
             android:id="@+id/imgBtnCall"
             style="@style/custom_header_linear_layout_children"
-            android:background="@null"
-            android:contentDescription="Call"
+            android:contentDescription="@string/call"
             android:onClick="callNumber"
             android:src="@drawable/ic_call_green" />
 
         <ImageButton
             android:id="@+id/imgBtnGetDirection"
             style="@style/custom_header_linear_layout_children"
-            android:background="@null"
-            android:contentDescription="Get Direction"
+            android:contentDescription="@string/get_direction"
             android:onClick="launchGoogleMaps"
             android:src="@drawable/ic_map_round" />
     </LinearLayout>
