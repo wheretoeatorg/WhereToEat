@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -307,8 +308,12 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
             int counter = 1;
             for (Restaurant restaurant : resList) {
                 double[] coordinates = restaurant.getLocation();
-                GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName(),
-                        this, counter);
+                if (!TextUtils.isEmpty(restaurant.getName()) && coordinates != null
+                        && coordinates.length > 0)
+                {
+                    GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName(),
+                            this, counter);
+                }
                 counter++;
             }
         }

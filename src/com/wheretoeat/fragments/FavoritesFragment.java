@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,6 +71,17 @@ public class FavoritesFragment extends Fragment {
                 Restaurant res = resList.get(position);
                 showFilterDialog();
                 tvResName.setText(res.getName());
+
+                FavoriteRestaurant favRes = getFavRestaurant(resId);
+                if (favRes != null) {
+                    String note = favRes.getNote();
+                    String restId = favRes.getResId();
+                    etNotes.setTag(restId);
+                    if (!TextUtils.isEmpty(note)) {
+                        etNotes.setText(note);
+                    }
+                }
+
             }
         });
 
@@ -100,7 +112,6 @@ public class FavoritesFragment extends Fragment {
                                 resList.remove(remPos);
                                 adapter.notifyDataSetChanged();
                             }
-
                             break;
                         default:
                             break;
@@ -135,9 +146,19 @@ public class FavoritesFragment extends Fragment {
 
     public void removeFavRestaurant(Restaurant rest) {
         Log.d(TAG, "removeFavRestaurant()");
-        if (rest != null && !rest.getResId().isEmpty()) {
+        if (rest != null && !TextUtils.isEmpty(rest.getResId())) {
             new Delete().from(FavoriteRestaurant.class).where("resId=?", rest.getResId()).execute();
         }
+    }
+
+    public FavoriteRestaurant getFavRestaurant(String restId) {
+        Log.d(TAG, "getFavRestaurantNote()");
+        if (!TextUtils.isEmpty(restId)) {
+            FavoriteRestaurant favRest = new Select().from(FavoriteRestaurant.class)
+                    .where("resId = ?", restId).executeSingle();
+            return favRest;
+        }
+        return null;
     }
 
     public List<Restaurant> getResList() {
@@ -162,7 +183,25 @@ public class FavoritesFragment extends Fragment {
     DialogInterface.OnClickListener dialogOnClickListener = new DialogInterface.OnClickListener() {
         @Override
         public void onClick(DialogInterface dialog, int which) {
+            switch (which) {
+            // Save Button
+                case -1:
+                    updateRestaurant(etNotes.getText(), etNotes.getTag());
+                    break;
+                // Cancel Button
+                case -2:
+                    break;
+                default:
+                    break;
+            }
+        }
 
+        private void updateRestaurant(Editable text, Object favResId) {
+            if (favResId != null && !TextUtils.isEmpty(text)) {
+                FavoriteRestaurant favRes = getFavRestaurant(favResId.toString());
+                favRes.setNote(text.toString());
+                favRes.save();
+            }
         }
     };
 }

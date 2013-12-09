@@ -1,3 +1,4 @@
+
 package com.wheretoeat.models;
 
 import com.activeandroid.Model;
@@ -6,89 +7,99 @@ import com.activeandroid.annotation.Table;
 
 @Table(name = "favorites")
 public class FavoriteRestaurant extends Model {
-	@Column(name = "name")
-	private String name;
-	@Column(name = "categories")
-	private String categories;
-	@Column(name = "distance")
-	private double distanceMiles;
-	@Column(name = "ratings")
-	private float ratings;
-	@Column(name = "resRef")
-	private String resRef;
-	@Column(name = "resId")
-	private String resId;
-	@Column(name = "latit")
-	private double lattitude;
-	@Column(name = "longi")
-	private double longitude;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "categories")
+    private String categories;
+    @Column(name = "distance")
+    private double distanceMiles;
+    @Column(name = "ratings")
+    private float ratings;
+    @Column(name = "resRef")
+    private String resRef;
+    @Column(name = "resId")
+    private String resId;
+    @Column(name = "latit")
+    private double lattitude;
+    @Column(name = "longi")
+    private double longitude;
+    @Column(name = "note")
+    private String note;
 
-	public FavoriteRestaurant() {
-		super();
-	}
+    public String getNote() {
+        return note;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public FavoriteRestaurant() {
+        super();
+    }
 
-	public String getCategories() {
-		return categories;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setCategories(String categories) {
-		this.categories = categories;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public double getDistanceMiles() {
-		return distanceMiles;
-	}
+    public String getCategories() {
+        return categories;
+    }
 
-	public void setDistanceMiles(double distanceMiles) {
-		this.distanceMiles = distanceMiles;
-	}
+    public void setCategories(String categories) {
+        this.categories = categories;
+    }
 
-	public float getRatings() {
-		return ratings;
-	}
+    public double getDistanceMiles() {
+        return distanceMiles;
+    }
 
-	public void setRatings(float ratings) {
-		this.ratings = ratings;
-	}
+    public void setDistanceMiles(double distanceMiles) {
+        this.distanceMiles = distanceMiles;
+    }
 
-	public String getResRef() {
-		return resRef;
-	}
+    public float getRatings() {
+        return ratings;
+    }
 
-	public void setResRef(String resRef) {
-		this.resRef = resRef;
-	}
+    public void setRatings(float ratings) {
+        this.ratings = ratings;
+    }
 
-	public String getResId() {
-		return resId;
-	}
+    public String getResRef() {
+        return resRef;
+    }
 
-	public void setResId(String resId) {
-		this.resId = resId;
-	}
+    public void setResRef(String resRef) {
+        this.resRef = resRef;
+    }
 
-	public double getLattitude() {
-		return lattitude;
-	}
+    public String getResId() {
+        return resId;
+    }
 
-	public void setLattitude(double lattitude) {
-		this.lattitude = lattitude;
-	}
+    public void setResId(String resId) {
+        this.resId = resId;
+    }
 
-	public double getLongitude() {
-		return longitude;
-	}
+    public double getLattitude() {
+        return lattitude;
+    }
 
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
+    public void setLattitude(double lattitude) {
+        this.lattitude = lattitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
 }

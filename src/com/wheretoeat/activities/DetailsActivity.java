@@ -11,10 +11,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -50,6 +52,9 @@ public class DetailsActivity extends Activity {
     private TextView tvRestaurantName;
     private TextView tvAddress;
     private ToggleButton tglBtnFav;
+    ImageButton imgBtnGetDirection;
+    ImageButton imgBtnSeeWebSite;
+    ImageButton imgBtnCall;
     String resRef;
     String resId;
     double[] coords;
@@ -99,6 +104,9 @@ public class DetailsActivity extends Activity {
         tvReviewCount = (TextView) headerView.findViewById(R.id.tvReviewCount);
         reviewRatingBar = (RatingBar) headerView.findViewById(R.id.ivRating);
         tvDetailviewRatings = (TextView) headerView.findViewById(R.id.tvDetailviewRatings);
+        imgBtnSeeWebSite = (ImageButton) headerView.findViewById(R.id.imgBtnSeeWebSite);
+        imgBtnCall = (ImageButton) headerView.findViewById(R.id.imgBtnCall);
+        imgBtnGetDirection = (ImageButton) headerView.findViewById(R.id.imgBtnGetDirection);
     }
 
     private void setupRestaurant(Restaurant rest) {
@@ -130,7 +138,6 @@ public class DetailsActivity extends Activity {
         if (rest.getReviews() != null) {
             reviewCount = rest.getReviews().size();
         }
-
         tvReviewCount.setText(reviewCount + " Reviews");
     }
 
@@ -138,6 +145,13 @@ public class DetailsActivity extends Activity {
         Log.d(TAG, "onClickFavorite()");
         boolean isChecked = tglBtnFav.isChecked();
         if (isChecked) {
+            if (TextUtils.isEmpty(tvRestaurantName.getText().toString())) {
+                tglBtnFav.setChecked(false);
+                Toast.makeText(DetailsActivity.this,
+                        "Please Wait until data is available and then try",
+                        Toast.LENGTH_SHORT).show();
+                return;
+            }
             FavoriteRestaurant fav = new FavoriteRestaurant();
             fav.setName(tvRestaurantName.getText().toString());
             fav.setResRef(resRef);
@@ -159,7 +173,7 @@ public class DetailsActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(TAG, "onCreateOptionsMenu()");
-        getMenuInflater().inflate(R.menu.details, menu);
+        // getMenuInflater().inflate(R.menu.details, menu);
         return true;
     }
 
@@ -181,6 +195,12 @@ public class DetailsActivity extends Activity {
                 }
                 setupRestaurant(r);
                 setProgressBarIndeterminateVisibility(false);
+                enableButtons();
+            }
+
+            private void enableButtons() {
+                tglBtnFav.setClickable(true);
+
             }
 
             @Override
