@@ -1,54 +1,60 @@
-buildscript {
-  repositories {
-    mavenCentral()
-  }
-
-  dependencies {
-    classpath 'com.android.tools.build:gradle:0.10.1'
-  }
-}
-
 apply plugin: 'android'
 
-android {
-  compileSdkVersion 19
-  buildToolsVersion '19.0.1'
-  
-  signingConfigs {
-        debug {
-            storeFile file("./src/keystore/debug.keystore")
-        }
+buildscript {
+    repositories {
+        mavenCentral()
+    }
 
-        releaseconfig {
-            storeFile file("wheretoeat-release-key.keystore")
-            storePassword "rgpatel7734"
-            keyAlias "DistributionKeyStoreAlias"
-            keyPassword "rgpatel7734"
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.10.1'
+    }
+}
+
+task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
+    gradleVersion = 1.11
+}
+
+android {
+    compileSdkVersion 19
+    buildToolsVersion '19.0.1'
+    signingConfigs {
+        debug {
+            storeFile file('./src/keystore/debug.keystore')
         }
-	}
-	
-	buildTypes {
+        releaseconfig {
+            storeFile file('wheretoeat-release-key.keystore')
+            storePassword 'rgpatel7734'
+            keyAlias 'DistributionKeyStoreAlias'
+            keyPassword 'rgpatel7734'
+        }
+    }
+    buildTypes {
         wheretoeatrelease {
             debuggable true
             jniDebugBuild true
             signingConfig signingConfigs.releaseconfig
         }
     }
-  sourceSets {
-    main {
-      manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs = ['src']
-      resources.srcDirs = ['src']
-      renderscript.srcDirs = ['src']
-      res.srcDirs = ['res']
-      assets.srcDirs = ['assets']
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        instrumentTest.setRoot('tests')
     }
+    dependencies {
+        compile fileTree(dir: 'libs', include: '*.jar', exclude: 'android-support-v4.jar')
+        compile 'com.google.android.gms:play-services:3.2.25'
+    }
+    defaultConfig {}
+    productFlavors {
+    }
+}
 
-    instrumentTest.setRoot('tests')
-  }
-
-  dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar', exclude: 'android-support-v4.jar')
-    compile 'com.google.android.gms:play-services:3.2.25'
-  }
+dependencies {
 }
