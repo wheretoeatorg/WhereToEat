@@ -4,15 +4,15 @@ buildscript {
   }
 
   dependencies {
-    classpath 'com.android.tools.build:gradle:0.4'
+    classpath 'com.android.tools.build:gradle:0.10.1'
   }
 }
 
 apply plugin: 'android'
 
 android {
-  compileSdkVersion 18
-  buildToolsVersion '17.0'
+  compileSdkVersion 19
+  buildToolsVersion '19.0.1'
   
   signingConfigs {
         debug {
