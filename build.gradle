@@ -17,22 +17,25 @@ task wrapper(type: org.gradle.api.tasks.wrapper.Wrapper) {
 android {
     compileSdkVersion 19
     buildToolsVersion '19.0.1'
+
     signingConfigs {
         debug {
-            storeFile file('./src/keystore/debug.keystore')
+            storeFile file("./src/keystore/debug.keystore")
         }
-        releaseconfig {
-            storeFile file('wheretoeat-release-key.keystore')
-            storePassword 'rgpatel7734'
-            keyAlias 'DistributionKeyStoreAlias'
-            keyPassword 'rgpatel7734'
+
+        myConfig {
+            storeFile file("other.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
         }
     }
+
     buildTypes {
-        wheretoeatrelease {
+        foo {
             debuggable true
             jniDebugBuild true
-            signingConfig signingConfigs.releaseconfig
+            signingConfig signingConfigs.debug
         }
     }
     sourceSets {
@@ -52,9 +55,8 @@ android {
         compile 'com.google.android.gms:play-services:3.2.25'
     }
     defaultConfig {}
-    productFlavors {
+    productFlavors {}
+    lintOptions {
+        abortOnError false
     }
-}
-
-dependencies {
 }
