@@ -646,8 +646,7 @@ public class SlidingBottomUpLayout extends ViewGroup {
         final int action = MotionEventCompat.getActionMasked(ev);
         Log.d(TAG, "onInterceptTouchEvent()");
 
-        if (!mCanSlide || !mIsSlidingEnabled
-                || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
+        if (!mCanSlide || !mIsSlidingEnabled || (mIsUnableToDrag && action != MotionEvent.ACTION_DOWN)) {
             mDragHelper.cancel();
             Log.d(TAG, "onInterceptTouchEvent() 656");
             return super.onInterceptTouchEvent(ev);
@@ -679,8 +678,8 @@ public class SlidingBottomUpLayout extends ViewGroup {
                 final float adx = Math.abs(x - mInitialMotionX);
                 final float ady = Math.abs(y - mInitialMotionY);
                 float adyRegY = y - mInitialMotionY;
-
-                if (isExpandedPanel && isListViewFirstRowVisible && adyRegY > 0) {
+                Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE adyRegY - " + adyRegY);
+                if (isExpandedPanel && isListViewFirstRowVisible && adyRegY > 50) {
                     Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE 695 ");
                     return true;
                 }
@@ -760,14 +759,23 @@ public class SlidingBottomUpLayout extends ViewGroup {
                 final float dy = y - mInitialMotionY;
                 final int slop = mDragHelper.getTouchSlop();
                 View dragView = mDragView != null ? mDragView : mSlideableView;
-                if (dx * dx + dy * dy < slop * slop &&
-                        isDragViewUnder((int) x, (int) y)) {
+                Log.d("TAG", "dx - " + dx);
+                Log.d("TAG", "dy - " + dy);
+                Log.d("TAG", "dx * dx + dy * dy - " + (dx * dx + dy * dy));
+                Log.d("TAG", "slop - " + slop);
+                Log.d("TAG", "slop * slop - " + slop * slop);
+                Log.d("TAG", "isDragViewUnder((int) x, (int) y) - " + isDragViewUnder((int) x, (int) y));
+                float absDy = Math.abs(dy);
+                if (absDy > 50 && dx * dx + dy * dy < slop * slop && isDragViewUnder((int) x, (int) y)) {
+                    Log.d("TAG", "*** insideIf ***");
                     dragView.playSoundEffect(SoundEffectConstants.CLICK);
                     if (!isExpanded() && !isAnchored()) {
                         Log.d(TAG, "expandPane(mAnchorPoint);");
+                        Log.d("TAG", "expandPane();");
                         expandPane(mAnchorPoint);
-                    } else {
+                    } else if (absDy > 50) {
                         Log.d(TAG, "collapsePane();");
+                        Log.d("TAG", "collapsePane();");
                         collapsePane();
                     }
                     break;

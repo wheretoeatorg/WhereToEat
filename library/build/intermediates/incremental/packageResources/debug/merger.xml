@@ -11,7 +11,7 @@
             <file
                 path="/Users/ashish/Documents/workspace-studio/WhereToEat/library/res/values/attrs.xml"
                 qualifiers="" >
-                <declare-styleable name="SlidingUpPanelLayout" >
+                <declare-styleable name="SlidingBottomUpLayout" >
                     <attr
                         name="collapsedHeight"
                         format="dimension" />

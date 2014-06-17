@@ -55,7 +55,7 @@ containing a value of this type.
         public static int above_shadow=0x7f020000;
     }
     public static final class styleable {
-        /** Attributes that can be used with a SlidingUpPanelLayout.
+        /** Attributes that can be used with a SlidingBottomUpLayout.
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
