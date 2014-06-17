@@ -678,8 +678,11 @@ public class SlidingBottomUpLayout extends ViewGroup {
                 final float adx = Math.abs(x - mInitialMotionX);
                 final float ady = Math.abs(y - mInitialMotionY);
                 float adyRegY = y - mInitialMotionY;
+                float adxRegX = x - mInitialMotionX;
+                float absAdxRegX = Math.abs(adxRegX);
                 Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE adyRegY - " + adyRegY);
-                if (isExpandedPanel && isListViewFirstRowVisible && adyRegY > 50) {
+                Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE adxRegX - " + adxRegX);
+                if (isExpandedPanel && isListViewFirstRowVisible && adyRegY > 60 && absAdxRegX < adyRegY) {
                     Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE 695 ");
                     return true;
                 }

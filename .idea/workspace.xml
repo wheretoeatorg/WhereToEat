@@ -40,19 +40,15 @@
   </component>
   <component name="AndroidLogFilters">
     <option name="TOOL_WINDOW_LOG_LEVEL" value="DEBUG" />
-    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="SlidingBottomUpLayout" />
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.wheretoeat.activities" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a7f44c24-2249-44fb-b335-99544edf3ce4" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/res/values/color.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/cache.properties.lock" afterPath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/cache.properties.lock" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/fileHashes.bin" afterPath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/fileHashes.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/fileSnapshots.bin" afterPath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/fileSnapshots.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/outputFileStates.bin" afterPath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/outputFileStates.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/taskArtifacts.bin" afterPath="$PROJECT_DIR$/.gradle/1.11/taskArtifacts/taskArtifacts.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/wheretoeat/activities/MainActivity.java" afterPath="$PROJECT_DIR$/src/com/wheretoeat/activities/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/res/values/styles.xml" afterPath="$PROJECT_DIR$/res/values/styles.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java" afterPath="$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="WhereToEat.iws" />
@@ -115,7 +111,20 @@
     <favorites_list name="WhereToEat" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="SlidingBottomUpLayout.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.69005847" vertical-offset="9754" max-vertical-offset="18600">
+              <caret line="684" column="94" selection-start-line="684" selection-start-column="94" selection-end-line="684" selection-end-column="94" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -1251,7 +1260,6 @@
         <option value="$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingUpPanelLayout.java" />
         <option value="$PROJECT_DIR$/res/drawable/rectangle_white.xml" />
         <option value="$PROJECT_DIR$/res/layout/list_restaurant_item.xml" />
-        <option value="$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java" />
         <option value="$PROJECT_DIR$/res/drawable/selector_list_item.xml" />
         <option value="$PROJECT_DIR$/res/drawable/rectangle_holo_blue_light.xml" />
         <option value="$PROJECT_DIR$/res/layout/fragment_categories.xml" />
@@ -1262,6 +1270,7 @@
         <option value="$PROJECT_DIR$/src/com/wheretoeat/activities/MainActivity.java" />
         <option value="$PROJECT_DIR$/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/res/values/styles.xml" />
+        <option value="$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java" />
       </list>
     </option>
   </component>
@@ -1552,7 +1561,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="22" width="1216" height="778" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1568,7 +1577,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32930514" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41993958" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.41993958" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1644,13 +1653,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java</url>
-          <line>704</line>
+          <line>707</line>
           <properties />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java</url>
-          <line>728</line>
+          <line>731</line>
           <properties />
           <option name="timeStamp" value="2" />
         </line-breakpoint>
@@ -1747,16 +1756,6 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="109032" max-vertical-offset="286770">
           <caret line="7460" column="0" selection-start-line="7460" selection-start-column="0" selection-end-line="7460" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6557377" vertical-offset="9855" max-vertical-offset="18555">
-          <caret line="691" column="75" selection-start-line="691" selection-start-column="75" selection-end-line="691" selection-end-column="75" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1900,6 +1899,16 @@
         <state vertical-scroll-proportion="0.5915493" vertical-offset="405" max-vertical-offset="5955">
           <caret line="85" column="84" selection-start-line="85" selection-start-column="84" selection-end-line="85" selection-end-column="84" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/library/src/com/avgtechie/slidinguppanel/SlidingBottomUpLayout.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69005847" vertical-offset="9754" max-vertical-offset="18600">
+          <caret line="684" column="94" selection-start-line="684" selection-start-column="94" selection-end-line="684" selection-end-column="94" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
