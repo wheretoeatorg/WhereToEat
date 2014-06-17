@@ -52,27 +52,33 @@ public class DetailsActivity extends Activity {
     private TextView tvRestaurantName;
     private TextView tvAddress;
     private ToggleButton tglBtnFav;
-    ImageButton imgBtnGetDirection;
-    ImageButton imgBtnSeeWebSite;
-    ImageButton imgBtnCall;
-    String resRef;
-    String resId;
-    double[] coords;
-    View headerView = null;
+    private ImageButton imgBtnGetDirection;
+    private ImageButton imgBtnSeeWebSite;
+    private ImageButton imgBtnCall;
+    private String resRef;
+    private String resId;
+    private double[] coords;
+    private View headerView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
-        // Must be call before adding contentview.
+        // Must be call before calling setContentView().
         requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+
         setContentView(R.layout.activity_details);
+
         resRef = getIntent().getStringExtra(Constants.RES_REF);
         resId = getIntent().getStringExtra(Constants.RES_ID);
         coords = getIntent().getDoubleArrayExtra(Constants.RES_LOCATION);
+
         fetchDetails(resRef);
+
         initViews();
+
         initHeaderView();
+
         reviews = new ArrayList<Review>();
         adapter = new ReviewsAdapter(this, reviews);
         ListView lvReviewsList = (ListView) findViewById(R.id.lvReviewsList);
