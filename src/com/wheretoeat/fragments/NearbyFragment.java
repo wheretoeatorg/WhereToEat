@@ -147,7 +147,8 @@ public class NearbyFragment extends Fragment {
                     public void onFailure(Throwable t) {
                         Log.e(TAG, "Erros - " + t.getMessage());
                     }
-                });
+                }
+        );
     }
 
     public void searchPlacesApi() {

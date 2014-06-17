@@ -70,6 +70,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">25sp</item>
         <item name="android:paddingLeft">20sp</item>
+        <item name="android:listSelector">@drawable/category_selector_list_item</item>
     </style>
 
     <style name="custom_header">
