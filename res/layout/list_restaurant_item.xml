@@ -2,29 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/selector_list_item" >
+    android:background="@drawable/selector_list_item">
 
     <TextView
         android:id="@+id/tv_numbers"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        style="@style/custom_number_tv"
         android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
         android:layout_margin="10dp"
-        android:background="@android:color/holo_blue_light"
-        android:gravity="center"
-        android:text="10"
-        android:textColor="#ffffff"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:text="10" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@id/tv_numbers"
+        android:layout_marginTop="5dp"
         android:layout_toLeftOf="@+id/tv_miles"
         android:layout_toRightOf="@id/tv_numbers"
         android:maxLines="1"
+        android:padding="1dp"
         android:text="Restaurant Name"
         android:textSize="20sp"
         android:textStyle="bold" />
@@ -34,9 +30,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_name"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp"
         android:layout_toLeftOf="@+id/tv_ratings"
         android:layout_toRightOf="@id/tv_numbers"
-        android:maxLines="2"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="This is body for text withasdfasdf asidhfpasdif asdf;khasdfhasd asdkfhasdkh the...."
         android:textSize="12sp" />
 
@@ -44,18 +43,32 @@
         android:id="@id/tv_miles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/tv_empty"
+        android:layout_alignTop="@id/tv_name"
+        android:layout_alignBottom="@id/tv_name"
+        android:padding="1dp"
+        android:text="10 mi"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@id/tv_empty"
+        android:layout_width="10dp"
+        android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@id/tv_name"
-        android:text="10 mi"
+        android:layout_alignBottom="@id/tv_body"
+        android:paddingLeft="10dp"
+        android:text="nothing"
         android:textSize="18sp" />
 
     <TextView
         android:id="@id/tv_ratings"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/tv_body"
         android:layout_alignRight="@+id/tv_miles"
+        android:padding="1dp"
         android:layout_alignTop="@id/tv_body"
+        android:layout_alignBottom="@id/tv_body"
         android:text="3/5"
         android:textSize="18sp" />
 

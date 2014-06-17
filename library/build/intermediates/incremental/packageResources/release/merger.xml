@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="main" >
+        <source path="/Users/ashish/Documents/workspace-studio/WhereToEat/library/res" >
+            <file
+                name="above_shadow"
+                path="/Users/ashish/Documents/workspace-studio/WhereToEat/library/res/drawable/above_shadow.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                path="/Users/ashish/Documents/workspace-studio/WhereToEat/library/res/values/attrs.xml"
+                qualifiers="" >
+                <declare-styleable name="SlidingBottomUpLayout" >
+                    <attr
+                        name="collapsedHeight"
+                        format="dimension" />
+                    <attr
+                        name="shadowHeight"
+                        format="dimension" />
+                    <attr
+                        name="fadeColor"
+                        format="color" />
+                    <attr
+                        name="flingVelocity"
+                        format="integer" />
+                    <attr
+                        name="dragView"
+                        format="reference" />
+                </declare-styleable>
+            </file>
+        </source>
+        <source path="/Users/ashish/Documents/workspace-studio/WhereToEat/library/build/generated/res/rs/release" />
+        <source path="/Users/ashish/Documents/workspace-studio/WhereToEat/library/build/generated/res/generated/release" />
+    </dataSet>
+    <dataSet config="release" >
+        <source path="/Users/ashish/Documents/workspace-studio/WhereToEat/library/src/release/res" />
+    </dataSet>
+
+</merger>

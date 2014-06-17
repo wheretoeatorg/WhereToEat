@@ -1,54 +1,55 @@
 buildscript {
-  repositories {
-    mavenCentral()
-  }
+    repositories {
+        mavenCentral()
+    }
 
-  dependencies {
-    classpath 'com.android.tools.build:gradle:0.4'
-  }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.11.+'
+    }
 }
-
 apply plugin: 'android'
-
 android {
-  compileSdkVersion 18
-  buildToolsVersion '17.0'
-  
-  signingConfigs {
+    compileSdkVersion 19
+    buildToolsVersion '19.1.0'
+    signingConfigs {
         debug {
-            storeFile file("debug.keystore")
+            storeFile file('debug.keystore')
         }
-
         releaseconfig {
-            storeFile file("wheretoeat-release-key.keystore")
-            storePassword "rgpatel7734"
-            keyAlias "DistributionKeyStoreAlias"
-            keyPassword "rgpatel7734"
+            storeFile file('wheretoeat-release-key.keystore')
+            storePassword 'rgpatel7734'
+            keyAlias 'DistributionKeyStoreAlias'
+            keyPassword 'rgpatel7734'
         }
-	}
-	
-	buildTypes {
+    }
+    buildTypes {
         wheretoeatrelease {
             debuggable true
             jniDebugBuild true
             signingConfig signingConfigs.releaseconfig
         }
     }
-  sourceSets {
-    main {
-      manifest.srcFile 'AndroidManifest.xml'
-      java.srcDirs = ['src']
-      resources.srcDirs = ['src']
-      renderscript.srcDirs = ['src']
-      res.srcDirs = ['res']
-      assets.srcDirs = ['assets']
+    sourceSets {
+        main {
+            manifest.srcFile 'AndroidManifest.xml'
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+        }
+
+        instrumentTest.setRoot('tests')
     }
+    dependencies {
+        compile fileTree(dir: 'libs', include: '*.jar', exclude: 'android-support-v4.jar')
+        compile 'com.google.android.gms:play-services:3.2.25'
+    }
+    defaultConfig {}
+    productFlavors {
+    }
+}
 
-    instrumentTest.setRoot('tests')
-  }
-
-  dependencies {
-    compile fileTree(dir: 'libs', include: '*.jar', exclude: 'android-support-v4.jar')
-    compile 'com.google.android.gms:play-services:3.2.25'
-  }
+dependencies {
+    compile project(':library')
 }

@@ -3,6 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!--
+    <com.wheretoeat.adapters.CustomListView
+        android:id="@+id/lv_nearby_res"
+        style="@style/custom_list_view" >
+    </com.wheretoeat.adapters.CustomListView>
+    -->
+
     <ListView
         android:id="@+id/lv_nearby_res"
         style="@style/custom_list_view" >

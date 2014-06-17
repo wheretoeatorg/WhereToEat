@@ -4,6 +4,7 @@ package com.wheretoeat.fragments;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,25 +28,46 @@ import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.wheretoeat.activities.R;
 import com.wheretoeat.adapters.RestaurantsAdpater;
+import com.wheretoeat.fragments.NearbyFragment.OnMapUpdateListener;
 import com.wheretoeat.models.FavoriteRestaurant;
 import com.wheretoeat.models.Restaurant;
 
 public class FavoritesFragment extends Fragment {
 
     private static final String TAG = "FavoritesFragment";
-    ListView lvFavRests;
-    List<FavoriteRestaurant> listFav;
-    RestaurantsAdpater adapter;
-    View dialogView;
-    List<Restaurant> resList = new ArrayList<Restaurant>();
-    EditText etNotes;
-    TextView tvResName;
+    private List<FavoriteRestaurant> listFav;
+    private RestaurantsAdpater adapter;
+    private View dialogView;
+    private List<Restaurant> resList = new ArrayList<Restaurant>();
+    private EditText etNotes;
+    private TextView tvResName;
+
+    private ListView listView;
+
+    private OnMapUpdateListener callBackHandler;
+
+    public ListView getListView() {
+        return listView;
+    }
+
+    public void setListView(ListView listView) {
+        this.listView = listView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        Log.d(TAG, "onAttach()");
+        super.onAttach(activity);
+        if (activity instanceof OnMapUpdateListener) {
+            callBackHandler = (OnMapUpdateListener) activity;
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView()");
         View view = inflater.inflate(R.layout.fragment_favorite, container, false);
-        lvFavRests = (ListView) view.findViewById(R.id.lv_fav_res);
+        listView = (ListView) view.findViewById(R.id.lv_fav_res);
         return view;
     }
 
@@ -63,8 +85,9 @@ public class FavoritesFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Log.d(TAG, "onActivityCreated()");
         adapter = new RestaurantsAdpater(getActivity(), getFavRestaurants());
-        lvFavRests.setAdapter(adapter);
-        lvFavRests.setOnItemClickListener(new OnItemClickListener() {
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String resId = view.getTag(R.string.RES_ID_KEY).toString();
@@ -85,7 +108,7 @@ public class FavoritesFragment extends Fragment {
             }
         });
 
-        lvFavRests.setOnItemLongClickListener(new OnItemLongClickListener() {
+        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
             private int remPos = -1;
 
             @Override
@@ -118,9 +141,7 @@ public class FavoritesFragment extends Fragment {
                     }
                 }
             };
-
         });
-
     }
 
     public List<Restaurant> getFavRestaurants() {
@@ -204,4 +225,11 @@ public class FavoritesFragment extends Fragment {
             }
         }
     };
+
+    public int getScrollY() {
+        if (listView != null && listView.getChildAt(0) != null) {
+            return listView.getChildAt(0).getTop();
+        }
+        return -1;
+    }
 }

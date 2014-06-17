@@ -8,20 +8,20 @@ package com.google.android.gms;
 
 public final class R {
 	public static final class attr {
-		public static final int cameraBearing = 0x7f010001;
-		public static final int cameraTargetLat = 0x7f010002;
-		public static final int cameraTargetLng = 0x7f010003;
-		public static final int cameraTilt = 0x7f010004;
-		public static final int cameraZoom = 0x7f010005;
-		public static final int mapType = 0x7f010000;
-		public static final int uiCompass = 0x7f010006;
-		public static final int uiRotateGestures = 0x7f010007;
-		public static final int uiScrollGestures = 0x7f010008;
-		public static final int uiTiltGestures = 0x7f010009;
-		public static final int uiZoomControls = 0x7f01000a;
-		public static final int uiZoomGestures = 0x7f01000b;
-		public static final int useViewLifecycle = 0x7f01000c;
-		public static final int zOrderOnTop = 0x7f01000d;
+		public static final int cameraBearing = 0x7f010006;
+		public static final int cameraTargetLat = 0x7f010007;
+		public static final int cameraTargetLng = 0x7f010008;
+		public static final int cameraTilt = 0x7f010009;
+		public static final int cameraZoom = 0x7f01000a;
+		public static final int mapType = 0x7f010005;
+		public static final int uiCompass = 0x7f01000b;
+		public static final int uiRotateGestures = 0x7f01000c;
+		public static final int uiScrollGestures = 0x7f01000d;
+		public static final int uiTiltGestures = 0x7f01000e;
+		public static final int uiZoomControls = 0x7f01000f;
+		public static final int uiZoomGestures = 0x7f010010;
+		public static final int useViewLifecycle = 0x7f010011;
+		public static final int zOrderOnTop = 0x7f010012;
 	}
 	public static final class color {
 		public static final int common_action_bar_splitter = 0x7f040009;
@@ -38,30 +38,30 @@ public final class R {
 		public static final int common_signin_btn_text_light = 0x7f04000b;
 	}
 	public static final class drawable {
-		public static final int common_signin_btn_icon_dark = 0x7f020000;
-		public static final int common_signin_btn_icon_disabled_dark = 0x7f020001;
-		public static final int common_signin_btn_icon_disabled_focus_dark = 0x7f020002;
-		public static final int common_signin_btn_icon_disabled_focus_light = 0x7f020003;
-		public static final int common_signin_btn_icon_disabled_light = 0x7f020004;
-		public static final int common_signin_btn_icon_focus_dark = 0x7f020005;
-		public static final int common_signin_btn_icon_focus_light = 0x7f020006;
-		public static final int common_signin_btn_icon_light = 0x7f020007;
-		public static final int common_signin_btn_icon_normal_dark = 0x7f020008;
-		public static final int common_signin_btn_icon_normal_light = 0x7f020009;
-		public static final int common_signin_btn_icon_pressed_dark = 0x7f02000a;
-		public static final int common_signin_btn_icon_pressed_light = 0x7f02000b;
-		public static final int common_signin_btn_text_dark = 0x7f02000c;
-		public static final int common_signin_btn_text_disabled_dark = 0x7f02000d;
-		public static final int common_signin_btn_text_disabled_focus_dark = 0x7f02000e;
-		public static final int common_signin_btn_text_disabled_focus_light = 0x7f02000f;
-		public static final int common_signin_btn_text_disabled_light = 0x7f020010;
-		public static final int common_signin_btn_text_focus_dark = 0x7f020011;
-		public static final int common_signin_btn_text_focus_light = 0x7f020012;
-		public static final int common_signin_btn_text_light = 0x7f020013;
-		public static final int common_signin_btn_text_normal_dark = 0x7f020014;
-		public static final int common_signin_btn_text_normal_light = 0x7f020015;
-		public static final int common_signin_btn_text_pressed_dark = 0x7f020016;
-		public static final int common_signin_btn_text_pressed_light = 0x7f020017;
+		public static final int common_signin_btn_icon_dark = 0x7f020001;
+		public static final int common_signin_btn_icon_disabled_dark = 0x7f020002;
+		public static final int common_signin_btn_icon_disabled_focus_dark = 0x7f020003;
+		public static final int common_signin_btn_icon_disabled_focus_light = 0x7f020004;
+		public static final int common_signin_btn_icon_disabled_light = 0x7f020005;
+		public static final int common_signin_btn_icon_focus_dark = 0x7f020006;
+		public static final int common_signin_btn_icon_focus_light = 0x7f020007;
+		public static final int common_signin_btn_icon_light = 0x7f020008;
+		public static final int common_signin_btn_icon_normal_dark = 0x7f020009;
+		public static final int common_signin_btn_icon_normal_light = 0x7f02000a;
+		public static final int common_signin_btn_icon_pressed_dark = 0x7f02000b;
+		public static final int common_signin_btn_icon_pressed_light = 0x7f02000c;
+		public static final int common_signin_btn_text_dark = 0x7f02000d;
+		public static final int common_signin_btn_text_disabled_dark = 0x7f02000e;
+		public static final int common_signin_btn_text_disabled_focus_dark = 0x7f02000f;
+		public static final int common_signin_btn_text_disabled_focus_light = 0x7f020010;
+		public static final int common_signin_btn_text_disabled_light = 0x7f020011;
+		public static final int common_signin_btn_text_focus_dark = 0x7f020012;
+		public static final int common_signin_btn_text_focus_light = 0x7f020013;
+		public static final int common_signin_btn_text_light = 0x7f020014;
+		public static final int common_signin_btn_text_normal_dark = 0x7f020015;
+		public static final int common_signin_btn_text_normal_light = 0x7f020016;
+		public static final int common_signin_btn_text_pressed_dark = 0x7f020017;
+		public static final int common_signin_btn_text_pressed_light = 0x7f020018;
 	}
 	public static final class id {
 		public static final int hybrid = 0x7f050004;
@@ -94,7 +94,7 @@ public final class R {
 		public static final int common_signin_button_text_long = 0x7f06000e;
 	}
 	public static final class styleable {
-		public static final int[] MapAttrs = { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d };
+		public static final int[] MapAttrs = { 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d, 0x7f01000e, 0x7f01000f, 0x7f010010, 0x7f010011, 0x7f010012 };
 		public static final int MapAttrs_cameraBearing = 1;
 		public static final int MapAttrs_cameraTargetLat = 2;
 		public static final int MapAttrs_cameraTargetLng = 3;

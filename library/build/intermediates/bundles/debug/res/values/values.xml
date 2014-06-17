@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- From: file:/Users/ashish/Documents/workspace-studio/WhereToEat/library/res/values/attrs.xml -->
+    <eat-comment />
+
+    <declare-styleable name="SlidingUpPanelLayout">
+        <attr name="collapsedHeight" format="dimension" />
+        <attr name="shadowHeight" format="dimension" />
+        <attr name="fadeColor" format="color" />
+        <attr name="flingVelocity" format="integer" />
+        <attr name="dragView" format="reference" />
+    </declare-styleable>
+
+</resources>

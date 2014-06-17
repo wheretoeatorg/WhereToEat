@@ -3,8 +3,6 @@ package com.wheretoeat.activities;
 
 import java.util.List;
 
-import android.app.ActionBar;
-import android.app.ActionBar.LayoutParams;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -22,14 +20,16 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
+import android.widget.AbsListView;
+import android.widget.AbsListView.OnScrollListener;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.avgtechie.slidinguppanel.SlidingBottomUpLayout;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -50,10 +50,9 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
     private static final String TAG = "MainFragmentActivity";
     private static int DETAILS_REQUEST_CODE = 1;
-    final static int ZOOM_LEVEL = 16;
+    final static int ZOOM_LEVEL = 12;
     private SectionPagerAdapter sectionPagerAdapter;
     private ViewPager viewPager;
-    private ActionBar actionBar;
     private GoogleMap googleMap;
     private SupportMapFragment supportMapFragment;
     private PagerTabStrip page;
@@ -65,12 +64,19 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
     private ToggleButton price4;
     // Switch swtchShowVisited;
     Switch swtchOpenNow;
+    // Layouts
+    private FrameLayout pagerFrameLayout;
+    private FrameLayout mapFrameLayout;
+
+    private ListView listView;
+    private SlidingBottomUpLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // create Pager Adapter.
         sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         // get ViewPager.
@@ -83,8 +89,9 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         viewPager.setAdapter(sectionPagerAdapter);
         viewPager.setCurrentItem(1);
 
-        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(
-                R.id.map);
+        // Initialize layouts
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+
         googleMap = supportMapFragment.getMap();
 
         double[] currentCoordinates = GoogleMapHelper.getCurrentlocation(MainActivity.this);
@@ -101,11 +108,16 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         } else {
             SharedPrefHelper.setLastKnownLocation(currentCoordinates, MainActivity.this);
         }
+
         SharedPrefHelper.addSearchName(MainActivity.this, SharedPrefHelper.NONE);
         LatLng currentLocation = new LatLng(currentCoordinates[0], currentCoordinates[1]);
-        googleMap.setMyLocationEnabled(true);
-        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL));
-        googleMap.getUiSettings().setZoomControlsEnabled(false);
+        if (googleMap != null) {
+            googleMap.setMyLocationEnabled(true);
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL));
+            googleMap.getUiSettings().setZoomControlsEnabled(false);
+        }
+        layout = (SlidingBottomUpLayout) findViewById(R.id.sliding_layout);
+        layout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
     }
 
     @Override
@@ -197,91 +209,110 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         }
     };
 
-    public void onClickZoomOutIn(View v) {
-        Log.d(TAG, "onClickZoomOutIn()");
-        int mainLayoutHeight = (findViewById(R.id.main_layout)).getHeight();
-        int id = v.getId();
-        ImageButton imgBtn = null;
-        FrameLayout pagerFrameLayout = (FrameLayout) findViewById(R.id.pager_container);
-        FrameLayout mapFrameLayout = (FrameLayout) findViewById(R.id.map_fragment_container);
-        int titleHeight = page.getHeight();
-        String tag = "out";
-
-        LinearLayout.LayoutParams pageParam = new LinearLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        LinearLayout.LayoutParams mapParam = new LinearLayout.LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-        switch (id) {
-            case R.id.imgBtnMap:
-                imgBtn = (ImageButton) v.findViewById(R.id.imgBtnMap);
-                tag = getBtnTag(imgBtn);
-                if (tag.equals("out")) {
-                    pageParam.height = titleHeight;
-                    mapParam.height = mainLayoutHeight - titleHeight;
-                    ((ImageButton) findViewById(R.id.imgBtnPager)).setVisibility(Button.INVISIBLE);
-                    imgBtn.setTag("in");
-                    imgBtn.setImageResource(R.drawable.ic_zoom_in);
-                } else {
-                    ((ImageButton) findViewById(R.id.imgBtnPager)).setVisibility(Button.VISIBLE);
-                    mapParam.height = mainLayoutHeight / 2;
-                    pageParam.height = mainLayoutHeight / 2;
-                    imgBtn.setImageResource(R.drawable.ic_zoom_out);
-                    imgBtn.setTag("out");
-                }
-                break;
-            case R.id.imgBtnPager:
-                imgBtn = (ImageButton) v.findViewById(R.id.imgBtnPager);
-                tag = getBtnTag(imgBtn);
-                if (tag.equals("out")) {
-                    pageParam.height = mainLayoutHeight;
-                    mapParam.height = 0;
-                    imgBtn.setTag("in");
-                    imgBtn.setImageResource(R.drawable.ic_zoom_in);
-                } else {
-                    mapParam.height = mainLayoutHeight / 2;
-                    pageParam.height = mainLayoutHeight / 2;
-                    imgBtn.setImageResource(R.drawable.ic_zoom_out);
-                    imgBtn.setTag("out");
-                }
-                break;
-            default:
-                break;
-        }
-
-        pagerFrameLayout.setLayoutParams(pageParam);
-        mapFrameLayout.setLayoutParams(mapParam);
-
-    }
+    // public void onClickZoomOutIn(View v) {
+    // Log.d(TAG, "onClickZoomOutIn()");
+    // int mainLayoutHeight = (findViewById(R.id.main_layout)).getHeight();
+    // int id = v.getId();
+    // ImageButton imgBtn = null;
+    //
+    // int titleHeight = page.getHeight();
+    // String tag = "out";
+    //
+    // LinearLayout.LayoutParams pageParam = new LinearLayout.LayoutParams(
+    // LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    // LinearLayout.LayoutParams mapParam = new LinearLayout.LayoutParams(
+    // LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+    // switch (id) {
+    // case R.id.imgBtnMap:
+    // imgBtn = (ImageButton) v.findViewById(R.id.imgBtnMap);
+    // tag = getBtnTag(imgBtn);
+    // if (tag.equals("out")) {
+    // pageParam.height = titleHeight;
+    // mapParam.height = mainLayoutHeight - titleHeight;
+    // ((ImageButton)
+    // findViewById(R.id.imgBtnPager)).setVisibility(Button.INVISIBLE);
+    // imgBtn.setTag("in");
+    // imgBtn.setImageResource(R.drawable.ic_zoom_in);
+    // } else {
+    // ((ImageButton)
+    // findViewById(R.id.imgBtnPager)).setVisibility(Button.VISIBLE);
+    // mapParam.height = mainLayoutHeight / 2;
+    // pageParam.height = mainLayoutHeight / 2;
+    // imgBtn.setImageResource(R.drawable.ic_zoom_out);
+    // imgBtn.setTag("out");
+    // }
+    // break;
+    // case R.id.imgBtnPager:
+    // imgBtn = (ImageButton) v.findViewById(R.id.imgBtnPager);
+    // tag = getBtnTag(imgBtn);
+    // if (tag.equals("out")) {
+    // pageParam.height = mainLayoutHeight;
+    // mapParam.height = 0;
+    // imgBtn.setTag("in");
+    // imgBtn.setImageResource(R.drawable.ic_zoom_in);
+    // } else {
+    // mapParam.height = mainLayoutHeight / 2;
+    // pageParam.height = mainLayoutHeight / 2;
+    // imgBtn.setImageResource(R.drawable.ic_zoom_out);
+    // imgBtn.setTag("out");
+    // }
+    // break;
+    // default:
+    // break;
+    // }
+    //
+    // // pagerFrameLayout.animate().setDuration(500).y(pageParam.height);
+    // pagerFrameLayout.setLayoutParams(pageParam);
+    // mapFrameLayout.setLayoutParams(mapParam);
+    //
+    // }
 
     private String getBtnTag(ImageButton btn) {
         if (btn != null && btn.getTag() != null) {
             return btn.getTag().toString();
         }
         return "out";
-
     }
 
     OnPageChangeListener pageChangeListener = new ViewPager.OnPageChangeListener() {
+
         @Override
         public void onPageSelected(int position) {
             Log.d(TAG, "onPageSelected()");
+
             if (!Utility.isNetworkAvailable(MainActivity.this)) {
                 Toast.makeText(MainActivity.this, R.string.network_is_not_available_,
                         Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            if (listView != null) {
+                listView.setOnScrollListener(null);
+            }
             Fragment frag = sectionPagerAdapter.getItem(position);
             List<Restaurant> resList;
             if (frag instanceof NearbyFragment) {
                 resList = ((NearbyFragment) frag).getResList();
+                Log.d(TAG, "NearbyFragment onPageSelected()");
+                listView = ((NearbyFragment) frag).getListView();
                 onMapUpdate(resList);
             } else if (frag instanceof TopRatedFragment) {
+                Log.d(TAG, "TopRatedFragment onPageSelected()");
                 resList = ((TopRatedFragment) frag).getResList();
+                listView = ((TopRatedFragment) frag).getListView();
                 onMapUpdate(resList);
             } else if (frag instanceof FavoritesFragment) {
+                Log.d(TAG, "FavoritesFragment onPageSelected()");
                 resList = ((FavoritesFragment) frag).getResList();
+                listView = ((FavoritesFragment) frag).getListView();
                 onMapUpdate(resList);
             }
+
+            if (listView != null) {
+                Log.d(TAG, "setupListViewScrollListener call onPageSelected()");
+                setupListViewScrollListener(listView);
+            }
+
         }
 
         @Override
@@ -290,9 +321,16 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
         @Override
         public void onPageScrollStateChanged(int arg0) {
-        }
 
+        }
     };
+
+    private int getScrollY(ListView lv) {
+        if (lv != null && lv.getChildAt(0) != null) {
+            return lv.getChildAt(0).getTop();
+        }
+        return -1;
+    }
 
     @Override
     public void onMapUpdate(List<Restaurant> resList) {
@@ -356,6 +394,54 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         } else if (frag instanceof TopRatedFragment) {
             ((TopRatedFragment) frag).searchPlacesApi();
         }
+    }
+
+    public FrameLayout getPagerFrameLayout() {
+        return pagerFrameLayout;
+    }
+
+    public FrameLayout getMapFrameLayout() {
+        return mapFrameLayout;
+    }
+
+    public ViewPager getViewPager() {
+        return viewPager;
+    }
+
+    @Override
+    public void setupListViewScrollListener(final ListView lv) {
+        Log.d(TAG, "setupListViewScrollListener()");
+
+        lv.setOnScrollListener(new OnScrollListener() {
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int
+                    visibleItemCount,
+                    int totalItemCount) {
+                int topY = getScrollY(lv);
+                if (topY == 0) {
+                    Log.d(TAG, "onScroll if" + topY);
+                    layout.setListViewFirstRowVisible(true);
+                } else {
+                    Log.d(TAG, "onScroll else" + topY);
+                    layout.setListViewFirstRowVisible(false);
+                }
+
+            }
+        });
+
+    }
+
+    public int getScrollY() {
+        if (listView != null && listView.getChildAt(0) != null) {
+            return listView.getChildAt(0).getTop();
+        }
+        return -1;
     }
 
 }

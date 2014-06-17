@@ -1,0 +1,12 @@
+int attr collapsedHeight 0x7f010000
+int attr dragView 0x7f010004
+int attr fadeColor 0x7f010002
+int attr flingVelocity 0x7f010003
+int attr shadowHeight 0x7f010001
+int drawable above_shadow 0x7f020000
+int[] styleable SlidingBottomUpLayout { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004 }
+int styleable SlidingBottomUpLayout_collapsedHeight 0
+int styleable SlidingBottomUpLayout_dragView 4
+int styleable SlidingBottomUpLayout_fadeColor 2
+int styleable SlidingBottomUpLayout_flingVelocity 3
+int styleable SlidingBottomUpLayout_shadowHeight 1
