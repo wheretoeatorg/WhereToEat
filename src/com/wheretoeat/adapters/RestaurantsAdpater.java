@@ -62,7 +62,7 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> implements
                 && location2.length > 0) {
             double distance = Utility.distance(currentLocation[0], currentLocation[1],
                     location2[0], location2[1]);
-            tvMiles.setText(distance + "/mi");
+            tvMiles.setText(distance + " mi");
         }
 
         return view;
@@ -90,7 +90,6 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> implements
     public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
         return false;
     }
-    
-    
+
 
 }
