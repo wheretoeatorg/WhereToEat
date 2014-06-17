@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -82,7 +83,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         // get ViewPager.
         viewPager = (ViewPager) findViewById(R.id.viewPagerCategory);
         page = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-
+        page.setTabIndicatorColor(getResources().getColor(R.color.holo_blue_light));
         // Set Listener for ViewPager
         viewPager.setOnPageChangeListener(pageChangeListener);
         // Set Adapter on ViewPager
@@ -186,7 +187,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
             Log.d(TAG, "onClick()");
 
             switch (which) {
-            // Save button
+                // Save button
                 case -1:
                     Filters filters = new Filters();
 
@@ -347,8 +348,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
             for (Restaurant restaurant : resList) {
                 double[] coordinates = restaurant.getLocation();
                 if (!TextUtils.isEmpty(restaurant.getName()) && coordinates != null
-                        && coordinates.length > 0)
-                {
+                        && coordinates.length > 0) {
                     GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName(),
                             this, counter);
                 }
@@ -422,7 +422,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int
                     visibleItemCount,
-                    int totalItemCount) {
+                                 int totalItemCount) {
                 int topY = getScrollY(lv);
                 if (topY == 0) {
                     Log.d(TAG, "onScroll if" + topY);
