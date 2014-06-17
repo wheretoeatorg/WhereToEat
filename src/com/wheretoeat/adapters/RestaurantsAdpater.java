@@ -50,7 +50,12 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> implements
         tvNumbers.setText(position + 1 + "");
         tvName.setText(restaurants.get(position).getName());
         tvInfo.setText(restaurants.get(position).getCategories());
-        tvRatings.setText(restaurants.get(position).getRating() + "/5");
+        if (restaurants.get(position).getRating().equalsIgnoreCase("NA")) {
+            tvRatings.setText(restaurants.get(position).getRating());
+        } else {
+            tvRatings.setText(restaurants.get(position).getRating() + "/5");
+        }
+
         Log.d(TAG, restaurants.get(position).getResId() + "");
         view.setTag(R.string.RES_REF_KEY, restaurants.get(position).getResRef());
         view.setTag(R.string.RES_ID_KEY, restaurants.get(position).getResId());
