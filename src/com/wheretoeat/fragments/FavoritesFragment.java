@@ -77,7 +77,14 @@ public class FavoritesFragment extends Fragment {
         Log.d(TAG, "onStart()");
         resList.clear();
         resList = getFavRestaurants();
+        adapter.notifyDataSetChanged();
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume()");
     }
 
     @Override
@@ -127,7 +134,7 @@ public class FavoritesFragment extends Fragment {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
-                    // Delete button clicked;
+                        // Delete button clicked;
                         case -1:
                             if (remPos != -1) {
                                 Restaurant rest = resList.get(remPos);
@@ -205,7 +212,7 @@ public class FavoritesFragment extends Fragment {
         @Override
         public void onClick(DialogInterface dialog, int which) {
             switch (which) {
-            // Save Button
+                // Save Button
                 case -1:
                     updateRestaurant(etNotes.getText(), etNotes.getTag());
                     break;
