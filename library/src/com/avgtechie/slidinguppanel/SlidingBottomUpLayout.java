@@ -30,6 +30,7 @@ public class SlidingBottomUpLayout extends ViewGroup {
 
     private boolean isListViewFirstRowVisible = false;
     private boolean isExpandedPanel = false;
+    private boolean isCollapsedPanel = true;
 
     public boolean isListViewFirstRowVisible() {
         return isListViewFirstRowVisible;
@@ -375,6 +376,7 @@ public class SlidingBottomUpLayout extends ViewGroup {
 
     void dispatchOnPanelExpanded(View panel) {
         isExpandedPanel = true;
+        isCollapsedPanel = false;
         if (mPanelSlideListener != null) {
             Log.d(TAG, "dispatchOnPanelExpanded : " + isExpandedPanel);
             mPanelSlideListener.onPanelExpanded(panel);
@@ -384,6 +386,7 @@ public class SlidingBottomUpLayout extends ViewGroup {
 
     void dispatchOnPanelCollapsed(View panel) {
         isExpandedPanel = false;
+        isCollapsedPanel = true;
         if (mPanelSlideListener != null) {
             mPanelSlideListener.onPanelCollapsed(panel);
         }
@@ -660,6 +663,7 @@ public class SlidingBottomUpLayout extends ViewGroup {
 
         final float x = ev.getX();
         final float y = ev.getY();
+        boolean enableSwipe = true;
         boolean interceptTap = false;
         switch (action) {
 
@@ -680,12 +684,21 @@ public class SlidingBottomUpLayout extends ViewGroup {
                 float adyRegY = y - mInitialMotionY;
                 float adxRegX = x - mInitialMotionX;
                 float absAdxRegX = Math.abs(adxRegX);
+                float absAdyRegY = Math.abs(adyRegY);
                 Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE adyRegY - " + adyRegY);
                 Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE adxRegX - " + adxRegX);
+
                 if (isExpandedPanel && isListViewFirstRowVisible && adyRegY > 60 && absAdxRegX < adyRegY) {
                     Log.d(TAG, "onInterceptTouchEvent() ACTION_MOVE 695 ");
                     return true;
                 }
+
+                Log.d(TAG, "isCollapsedPanel : " + isCollapsedPanel);
+                Log.d(TAG, "enableSwipe : " + enableSwipe);
+//                if (isCollapsedPanel && !(absAdxRegX < absAdyRegY)) {
+//                    Log.d(TAG, "onInterceptTouchEvent() isExpandedPanel 736 ");
+//                    return super.onInterceptTouchEvent(ev);
+//                }
 
                 final int dragSlop = mDragHelper.getTouchSlop();
 
@@ -719,9 +732,10 @@ public class SlidingBottomUpLayout extends ViewGroup {
             Log.d(TAG, "onInterceptTouchEvent() isExpandedPanel 728 ");
             return super.onInterceptTouchEvent(ev);
         }
-
-        final boolean interceptForDrag = mDragHelper.shouldInterceptTouchEvent(ev);
-        Log.d(TAG, "interceptForDrag || interceptTap = " + (interceptForDrag || interceptTap));
+        //final boolean interceptForDrag = mDragHelper.shouldInterceptTouchEvent(ev);
+        final boolean interceptForDrag = false;
+        Log.d(TAG, "interceptForDrag = " + interceptForDrag);
+        Log.d(TAG, "interceptTap = " + interceptTap);
         return interceptForDrag || interceptTap;
     }
 
@@ -1108,13 +1122,16 @@ public class SlidingBottomUpLayout extends ViewGroup {
             switch (state) {
                 case ViewDragHelper.STATE_DRAGGING:
                     isExpandedPanel = false;
+                    isCollapsedPanel = false;
                     break;
                 case ViewDragHelper.STATE_IDLE:
                     if (mSlideState == SlideState.COLLAPSED) {
                         isExpandedPanel = false;
+                        isCollapsedPanel = true;
                     } else if (mSlideState == SlideState.ANCHORED
                             || mSlideState == SlideState.EXPANDED) {
                         isExpandedPanel = true;
+                        isCollapsedPanel = false;
                     }
             }
 
