@@ -20,6 +20,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -47,6 +48,7 @@ public class NearbyFragment extends Fragment {
     private ProgressBar progressBar;
     private boolean firstLaunch = false;
     private PagerTabStrip page;
+    private TextView tvDataNotAvail;
     private FrameLayout mapFragFrameContainer;
 
     public ListView getListView() {
@@ -123,6 +125,7 @@ public class NearbyFragment extends Fragment {
     private void initViews(View nearbyFragView) {
         listView = (ListView) nearbyFragView.findViewById(R.id.lv_nearby_res);
         progressBar = (ProgressBar) nearbyFragView.findViewById(R.id.pb_nearby);
+        tvDataNotAvail = (TextView) nearbyFragView.findViewById(R.id.tv_data_not_avail);
     }
 
     @Override
@@ -185,6 +188,11 @@ public class NearbyFragment extends Fragment {
                 if (firstLaunch) {
                     callBackHandler.onMapUpdate(resList);
                     callBackHandler.setupListViewScrollListener(listView);
+                }
+                if (resList.size() == 0) {
+                    tvDataNotAvail.setVisibility(View.VISIBLE);
+                } else {
+                    tvDataNotAvail.setVisibility(View.GONE);
                 }
 
             }

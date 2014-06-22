@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -39,7 +40,7 @@ public class TopRatedFragment extends Fragment {
     private RestaurantsAdpater adapter;
     private OnMapUpdateListener callBackHandler;
     private ProgressBar progressBar;
-
+    private TextView tvDataNotAvail;
     private ListView listView;
 
     public ListView getListView() {
@@ -101,6 +102,7 @@ public class TopRatedFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_toprated, container, false);
         progressBar = (ProgressBar) view.findViewById(R.id.pb_toprated);
+        tvDataNotAvail = (TextView) view.findViewById(R.id.tv_data_not_avail);
         return view;
     }
 
@@ -158,6 +160,12 @@ public class TopRatedFragment extends Fragment {
                 adapter.addAll(resList);
                 if (progressBar != null) {
                     progressBar.setVisibility(View.INVISIBLE);
+                }
+
+                if (resList.size() == 0) {
+                    tvDataNotAvail.setVisibility(View.VISIBLE);
+                } else {
+                    tvDataNotAvail.setVisibility(View.GONE);
                 }
             }
 
