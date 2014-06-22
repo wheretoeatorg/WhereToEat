@@ -13,53 +13,53 @@ import com.wheretoeat.activities.R;
 import com.wheretoeat.models.Review;
 
 public class ReviewsAdapter extends ArrayAdapter<Review> {
-	private static final String TAG = "reviewsAdpater";
-	private Context context;
-	
-	List<Review> reviews;
-	TextView tvName;
-	TextView tvDate;
-	TextView tvRating;
-	TextView tvText;
+    private static final String TAG = "reviewsAdpater";
+    private Context context;
 
-	public ReviewsAdapter(Context context, List<Review> reviews) {
-		super(context, 0, reviews);
-		this.context = context;
-		this.reviews = reviews;
-	}
+    List<Review> reviews;
+    TextView tvName;
+    TextView tvDate;
+    TextView tvRating;
+    TextView tvText;
 
-	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = convertView;
-		if (view == null) {
-			LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = inflater.inflate(R.layout.review_item, null);
-		}
-		initViews(view);
+    public ReviewsAdapter(Context context, List<Review> reviews) {
+        super(context, 0, reviews);
+        this.context = context;
+        this.reviews = reviews;
+    }
 
-		tvName.setText(reviews.get(position).getAuthor());
-		tvDate.setText(reviews.get(position).getTime());
-		tvRating.setText(reviews.get(position).getRating() + "/5");
-		tvText.setText(reviews.get(position).getRatingText());
-		return view;
-	}
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        View view = convertView;
+        if (view == null) {
+            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = inflater.inflate(R.layout.review_item, null);
+        }
+        initViews(view);
 
-	private void initViews(View view) {
-		tvName = (TextView) view.findViewById(R.id.tvName);
-		tvDate = (TextView) view.findViewById(R.id.tvDate);
-		tvRating = (TextView) view.findViewById(R.id.tvRating);
-		tvText = (TextView) view.findViewById(R.id.tvText);
-	}
+        tvName.setText(reviews.get(position).getAuthor());
+        tvDate.setText(reviews.get(position).getTime());
+        tvRating.setText(reviews.get(position).getRating() + "/5");
+        tvText.setText(reviews.get(position).getRatingText());
+        return view;
+    }
+
+    private void initViews(View view) {
+        tvName = (TextView) view.findViewById(R.id.tvName);
+        tvDate = (TextView) view.findViewById(R.id.tvDate);
+        tvRating = (TextView) view.findViewById(R.id.tvRating);
+        tvText = (TextView) view.findViewById(R.id.tvText);
+    }
 
 
-	@Override
-	public int getCount() {
-		return reviews.size();
-	}
+    @Override
+    public int getCount() {
+        return reviews.size();
+    }
 
-	@Override
-	public Review getItem(int position) {
-		return reviews.get(position);
-	}
+    @Override
+    public Review getItem(int position) {
+        return reviews.get(position);
+    }
 
 }

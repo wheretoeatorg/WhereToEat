@@ -13,6 +13,7 @@ import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.location.LocationManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -24,96 +25,98 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class GoogleMapHelper {
 
-	private static final String TAG = "GoogleMapHelper";
+    private static final String TAG = "GoogleMapHelper";
 
-	public static double[] getCurrentlocation(Context context) {
-		LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-		List<String> providers = lm.getProviders(true);
-		Location l = null;
-		for (int i = 0; i < providers.size(); i++) {
-			l = lm.getLastKnownLocation(providers.get(i));
-			if (l != null)
-				break;
-		}
-		double[] gps = new double[2];
+    public static double[] getCurrentlocation(Context context) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        List<String> providers = lm.getProviders(true);
+        Location l = null;
+        for (int i = 0; i < providers.size(); i++) {
+            l = lm.getLastKnownLocation(providers.get(i));
+            if (l != null)
+                break;
+        }
+        double[] gps = new double[2];
 
-		if (l != null) {
-			gps[0] = l.getLatitude();
-			gps[1] = l.getLongitude();
-		}
-		return gps;
-	}
+        if (l != null) {
+            gps[0] = l.getLatitude();
+            gps[1] = l.getLongitude();
+        }
+        return gps;
+    }
 
-	public static void markLocationOnMap(double[] coordinates, GoogleMap googleMap, String title, Context context, int counter) {
+    public static Marker markLocationOnMap(double[] coordinates, GoogleMap googleMap, String title, Context context, int counter) {
 
-		LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
-		Bitmap bmp = null;
-		if (counter > 0) {
-			bmp = drawTextToBitmap(context, counter + "");
-		} else {
-			bmp = drawTextToBitmap(context, "0");
-		}
+        LatLng currentLocation = new LatLng(coordinates[0], coordinates[1]);
+        Bitmap bmp = null;
+        if (counter > 0) {
+            bmp = drawTextToBitmap(context, counter + "");
+        } else {
+            bmp = drawTextToBitmap(context, "0");
+        }
 
-		MarkerOptions markerOptions = new MarkerOptions();
-		markerOptions.position(currentLocation);
-		markerOptions.title(title);
-		if (title.equalsIgnoreCase("This is You")) {
-			markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
-		} else {
-			markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bmp));
-		}
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(currentLocation);
+        markerOptions.title(title);
 
-		googleMap.addMarker(markerOptions);
+        if (title.equalsIgnoreCase("This is You")) {
+            markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE));
+        } else {
+            markerOptions.icon(BitmapDescriptorFactory.fromBitmap(bmp));
+        }
 
-		googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
-			@Override
-			public boolean onMarkerClick(Marker marker) {
-				marker.getId();
-				return false;
-			}
-		});
-	}
+        Marker marker = googleMap.addMarker(markerOptions);
 
-	public static void clearAllMarkers(GoogleMap googleMap) {
-		googleMap.clear();
-	}
+        googleMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                return false;
+            }
+        });
+        return marker;
+    }
 
-	public static Bitmap drawTextToBitmap(Context mContext, String mText) {
-		try {
-			Resources resources = mContext.getResources();
-			Bitmap bitmap = BitmapFactory.decodeResource(resources, com.wheretoeat.activities.R.drawable.ic_map_marker);
 
-			android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
-			// set default bitmap config if none
-			if (bitmapConfig == null) {
-				bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
-			}
-			// resource bitmaps are imutable,
-			// so we need to convert it to mutable one
-			bitmap = bitmap.copy(bitmapConfig, true);
+    public static void clearAllMarkers(GoogleMap googleMap) {
+        googleMap.clear();
+    }
 
-			Canvas canvas = new Canvas(bitmap);
-			// new antialised Paint
-			Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
-			// text color - #3D3D3D
-			paint.setColor(Color.rgb(0, 0, 0));
-			// setTypeface(null, Typeface.BOLD);
-			paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-			// text size in pixels
-			paint.setTextSize((int) (30));
+    public static Bitmap drawTextToBitmap(Context mContext, String mText) {
+        try {
+            Resources resources = mContext.getResources();
+            Bitmap bitmap = BitmapFactory.decodeResource(resources, com.wheretoeat.activities.R.drawable.ic_map_marker);
 
-			// draw text to the Canvas center
-			Rect bounds = new Rect();
-			paint.getTextBounds(mText, 0, mText.length(), bounds);
-			int x = (bitmap.getWidth() - bounds.width()) / 2;
-			int y = (bitmap.getHeight() + bounds.height()) / 2;
-			canvas.drawText(mText, x - 5, y - 20, paint);
+            android.graphics.Bitmap.Config bitmapConfig = bitmap.getConfig();
+            // set default bitmap config if none
+            if (bitmapConfig == null) {
+                bitmapConfig = android.graphics.Bitmap.Config.ARGB_8888;
+            }
+            // resource bitmaps are imutable,
+            // so we need to convert it to mutable one
+            bitmap = bitmap.copy(bitmapConfig, true);
 
-			return bitmap;
-		} catch (Exception e) {
-			Log.d(TAG, e + "");
-			return null;
-		}
+            Canvas canvas = new Canvas(bitmap);
+            // new antialised Paint
+            Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+            // text color - #3D3D3D
+            paint.setColor(Color.rgb(0, 0, 0));
+            // setTypeface(null, Typeface.BOLD);
+            paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
+            // text size in pixels
+            paint.setTextSize((int) (30));
 
-	}
+            // draw text to the Canvas center
+            Rect bounds = new Rect();
+            paint.getTextBounds(mText, 0, mText.length(), bounds);
+            int x = (bitmap.getWidth() - bounds.width()) / 2;
+            int y = (bitmap.getHeight() + bounds.height()) / 2;
+            canvas.drawText(mText, x - 5, y - 20, paint);
+
+            return bitmap;
+        } catch (Exception e) {
+            Log.d(TAG, e + "");
+            return null;
+        }
+
+    }
 }

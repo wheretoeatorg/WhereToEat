@@ -47,7 +47,7 @@ public class NearbyFragment extends Fragment {
     private ProgressBar progressBar;
     private boolean firstLaunch = false;
     private PagerTabStrip page;
-    FrameLayout mapFragFrameContainer;
+    private FrameLayout mapFragFrameContainer;
 
     public ListView getListView() {
         return listView;

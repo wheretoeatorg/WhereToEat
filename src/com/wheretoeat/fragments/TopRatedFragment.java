@@ -124,7 +124,8 @@ public class TopRatedFragment extends Fragment {
                                 .show();
                         Log.e(TAG, "onFailure() :" + t);
                     }
-                });
+                }
+        );
     }
 
     public void searchPlacesApi() {

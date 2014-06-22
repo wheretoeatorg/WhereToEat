@@ -1,6 +1,7 @@
 
 package com.wheretoeat.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.app.AlertDialog;
@@ -35,6 +36,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.wheretoeat.adapters.SectionPagerAdapter;
 import com.wheretoeat.fragments.FavoritesFragment;
 import com.wheretoeat.fragments.NearbyFragment;
@@ -64,19 +66,22 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
     private ToggleButton price3;
     private ToggleButton price4;
     // Switch swtchShowVisited;
-    Switch swtchOpenNow;
+    private Switch swtchOpenNow;
     // Layouts
     private FrameLayout pagerFrameLayout;
     private FrameLayout mapFrameLayout;
 
     private ListView listView;
     private SlidingBottomUpLayout layout;
+    private List<Restaurant> globalResList = new ArrayList<Restaurant>();
+    private List<Marker> markerList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate()");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        markerList = new ArrayList<Marker>();
 
         // create Pager Adapter.
         sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
@@ -116,6 +121,25 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
             googleMap.setMyLocationEnabled(true);
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, ZOOM_LEVEL));
             googleMap.getUiSettings().setZoomControlsEnabled(false);
+            googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                @Override
+                public void onInfoWindowClick(Marker marker) {
+                    LatLng latLng = marker.getPosition();
+                    String id = marker.getId();
+                    Log.d(TAG, "id = " + id);
+                    int index = -1;
+                    for (int i = 0; i < markerList.size(); i++) {
+                        if (markerList.get(i).getId().equalsIgnoreCase(marker.getId())) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if (globalResList.size() > index) {
+                        double[] coord = new double[]{latLng.latitude, latLng.longitude};
+                        onDetailSelected(globalResList.get(index).getResRef(), globalResList.get(index).getResId(), coord);
+                    }
+                }
+            });
         }
         layout = (SlidingBottomUpLayout) findViewById(R.id.sliding_layout);
         layout.setShadowDrawable(getResources().getDrawable(R.drawable.above_shadow));
@@ -162,8 +186,6 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         price2 = (ToggleButton) dialogView.findViewById(R.id.price2);
         price3 = (ToggleButton) dialogView.findViewById(R.id.price3);
         price4 = (ToggleButton) dialogView.findViewById(R.id.price4);
-        // swtchShowVisited = (Switch)
-        // dialogView.findViewById(R.id.swtch_show_visited);
         swtchOpenNow = (Switch) dialogView.findViewById(R.id.swtch_open_now);
         populateDialotValues();
     }
@@ -175,7 +197,6 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         price2.setChecked(SharedPrefHelper.getPrice2Pref(MainActivity.this));
         price3.setChecked(SharedPrefHelper.getPrice3Pref(MainActivity.this));
         price4.setChecked(SharedPrefHelper.getPrice4Pref(MainActivity.this));
-        // swtchShowVisited.setChecked(SharedPrefHelper.isShowVisitedPrefs(MainActivity.this));
         swtchOpenNow.setChecked(SharedPrefHelper.getOpenNowPref(MainActivity.this));
 
     }
@@ -196,8 +217,6 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
                     filters.setPrice3(price3.isChecked());
                     filters.setPrice4(price4.isChecked());
                     filters.setOpenNow(swtchOpenNow.isChecked());
-                    // filters.setShowVisited(swtchShowVisited.isChecked());
-
                     SharedPrefHelper.AddFiltersSharedPrefs(filters, MainActivity.this);
 
                     break;
@@ -209,64 +228,6 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
             }
         }
     };
-
-    // public void onClickZoomOutIn(View v) {
-    // Log.d(TAG, "onClickZoomOutIn()");
-    // int mainLayoutHeight = (findViewById(R.id.main_layout)).getHeight();
-    // int id = v.getId();
-    // ImageButton imgBtn = null;
-    //
-    // int titleHeight = page.getHeight();
-    // String tag = "out";
-    //
-    // LinearLayout.LayoutParams pageParam = new LinearLayout.LayoutParams(
-    // LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    // LinearLayout.LayoutParams mapParam = new LinearLayout.LayoutParams(
-    // LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
-    // switch (id) {
-    // case R.id.imgBtnMap:
-    // imgBtn = (ImageButton) v.findViewById(R.id.imgBtnMap);
-    // tag = getBtnTag(imgBtn);
-    // if (tag.equals("out")) {
-    // pageParam.height = titleHeight;
-    // mapParam.height = mainLayoutHeight - titleHeight;
-    // ((ImageButton)
-    // findViewById(R.id.imgBtnPager)).setVisibility(Button.INVISIBLE);
-    // imgBtn.setTag("in");
-    // imgBtn.setImageResource(R.drawable.ic_zoom_in);
-    // } else {
-    // ((ImageButton)
-    // findViewById(R.id.imgBtnPager)).setVisibility(Button.VISIBLE);
-    // mapParam.height = mainLayoutHeight / 2;
-    // pageParam.height = mainLayoutHeight / 2;
-    // imgBtn.setImageResource(R.drawable.ic_zoom_out);
-    // imgBtn.setTag("out");
-    // }
-    // break;
-    // case R.id.imgBtnPager:
-    // imgBtn = (ImageButton) v.findViewById(R.id.imgBtnPager);
-    // tag = getBtnTag(imgBtn);
-    // if (tag.equals("out")) {
-    // pageParam.height = mainLayoutHeight;
-    // mapParam.height = 0;
-    // imgBtn.setTag("in");
-    // imgBtn.setImageResource(R.drawable.ic_zoom_in);
-    // } else {
-    // mapParam.height = mainLayoutHeight / 2;
-    // pageParam.height = mainLayoutHeight / 2;
-    // imgBtn.setImageResource(R.drawable.ic_zoom_out);
-    // imgBtn.setTag("out");
-    // }
-    // break;
-    // default:
-    // break;
-    // }
-    //
-    // // pagerFrameLayout.animate().setDuration(500).y(pageParam.height);
-    // pagerFrameLayout.setLayoutParams(pageParam);
-    // mapFrameLayout.setLayoutParams(mapParam);
-    //
-    // }
 
     private String getBtnTag(ImageButton btn) {
         if (btn != null && btn.getTag() != null) {
@@ -291,7 +252,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
                 listView.setOnScrollListener(null);
             }
             Fragment frag = sectionPagerAdapter.getItem(position);
-            List<Restaurant> resList;
+            List<Restaurant> resList = null;
             if (frag instanceof NearbyFragment) {
                 resList = ((NearbyFragment) frag).getResList();
                 Log.d(TAG, "NearbyFragment onPageSelected()");
@@ -308,6 +269,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
                 listView = ((FavoritesFragment) frag).getListView();
                 onMapUpdate(resList);
             }
+
 
             if (listView != null) {
                 Log.d(TAG, "setupListViewScrollListener call onPageSelected()");
@@ -335,22 +297,23 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
     @Override
     public void onMapUpdate(List<Restaurant> resList) {
+        globalResList = resList;
+
         Log.d(TAG, "onMapUpdate()");
         if (googleMap != null) {
             GoogleMapHelper.clearAllMarkers(googleMap);
+            markerList.clear();
             double[] currentCoordinates = GoogleMapHelper.getCurrentlocation(MainActivity.this);
-            GoogleMapHelper
-                    .markLocationOnMap(currentCoordinates, googleMap, "This is You", this, 0);
+            GoogleMapHelper.markLocationOnMap(currentCoordinates, googleMap, "This is You", this, 0);
         }
 
         if (resList != null && resList.size() > 0) {
             int counter = 1;
             for (Restaurant restaurant : resList) {
                 double[] coordinates = restaurant.getLocation();
-                if (!TextUtils.isEmpty(restaurant.getName()) && coordinates != null
-                        && coordinates.length > 0) {
-                    GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName(),
-                            this, counter);
+                if (!TextUtils.isEmpty(restaurant.getName()) && coordinates != null && coordinates.length > 0) {
+                    Marker marker = GoogleMapHelper.markLocationOnMap(coordinates, googleMap, restaurant.getName(), this, counter);
+                    markerList.add(marker);
                 }
                 counter++;
             }
