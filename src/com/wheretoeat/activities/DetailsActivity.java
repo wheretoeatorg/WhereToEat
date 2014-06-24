@@ -185,13 +185,6 @@ public class DetailsActivity extends Activity {
         TextView tvUserName = (TextView) inflatedView.findViewById(R.id.tv_user_name);
         tvUserName.setText(reviews.get(listItemIndex).getAuthor());
         tvUserRatings.setText(reviews.get(listItemIndex).getRatingText());
-//        Button btnOk = (Button) inflatedView.findViewById(R.id.btn_Ok);
-//        btnOk.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                popWindow.dismiss();
-//            }
-//        });
 
         // get device size
         Display display = getWindowManager().getDefaultDisplay();

@@ -28,12 +28,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ivRating"
         android:text="@string/_0_reviews"
+        android:layout_marginLeft="10dp"
         android:textColor="@android:color/darker_gray"
         android:textSize="20sp" />
 
     <LinearLayout
         android:id="@+id/linear_layout"
         style="@style/custom_header"
+        android:layout_margin="10dp"
         android:layout_below="@+id/tvReviewCount"
         android:orientation="horizontal">
 
@@ -48,6 +50,11 @@
             android:textOff=""
             android:textOn="" />
 
+        <ImageView
+            android:layout_width="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_height="match_parent" />
+
         <ImageButton
             android:id="@+id/imgBtnSeeWebSite"
             style="@style/custom_header_linear_layout_children"
@@ -55,12 +62,22 @@
             android:onClick="openSite"
             android:src="@drawable/ic_see_website_blue" />
 
+        <ImageView
+            android:layout_width="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_height="match_parent" />
+
         <ImageButton
             android:id="@+id/imgBtnCall"
             style="@style/custom_header_linear_layout_children"
             android:contentDescription="@string/call"
             android:onClick="callNumber"
             android:src="@drawable/ic_call_green" />
+
+        <ImageView
+            android:layout_width="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_height="match_parent" />
 
         <ImageButton
             android:id="@+id/imgBtnGetDirection"
