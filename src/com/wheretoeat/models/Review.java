@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -19,14 +21,6 @@ public class Review {
     private int rating;
     private String time;
     private long timestamp;
-
-    public long getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(long timestamp) {
-        this.timestamp = timestamp;
-    }
 
     public String getAuthor() {
         return author;
@@ -67,10 +61,14 @@ public class Review {
         return ratings;
     }
 
-    private static String formatedDate(long timeStamp) {
-        Date date = new Date(timeStamp);
-        SimpleDateFormat formatter = new SimpleDateFormat("MM/yy");
-        String formattedDate = formatter.format(date);
+    private static String formatedDate(long seconds) {
+
+        long millis = seconds * 1000;
+        Date date = new Date(millis);
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM yy", Locale.ENGLISH);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String formattedDate = sdf.format(date);
+        System.out.println(formattedDate);
         return formattedDate;
     }
 }
