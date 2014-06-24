@@ -4,6 +4,7 @@ package com.wheretoeat.adapters;
 import java.util.List;
 
 import android.content.Context;
+import android.media.Rating;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnTouchModeChangeListener;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.wheretoeat.activities.R;
@@ -24,13 +26,13 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> implements
         OnTouchListener {
     private static final String TAG = "RestaurantsAdpater";
     private Context context;
-    List<Restaurant> restaurants;
-    ImageView imgRestaurant;
-    TextView tvNumbers;
-    TextView tvName;
-    TextView tvInfo;
-    TextView tvMiles;
-    TextView tvRatings;
+    private List<Restaurant> restaurants;
+    private ImageView imgRestaurant;
+    private TextView tvNumbers;
+    private TextView tvName;
+    private TextView tvInfo;
+    private TextView tvMiles;
+    private RatingBar tvRatings;
 
     public RestaurantsAdpater(Context context, List<Restaurant> restaurants) {
         super(context, 0, restaurants);
@@ -51,9 +53,11 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> implements
         tvName.setText(restaurants.get(position).getName());
         tvInfo.setText(restaurants.get(position).getCategories());
         if (restaurants.get(position).getRating().equalsIgnoreCase("NA")) {
-            tvRatings.setText(restaurants.get(position).getRating());
+            //tvRatings.setText(restaurants.get(position).getRating());
+            tvRatings.setRating(0);
         } else {
-            tvRatings.setText(restaurants.get(position).getRating() + "/5");
+            //tvRatings.setText(restaurants.get(position).getRating() + "/5");
+            tvRatings.setRating(Float.parseFloat(restaurants.get(position).getRating()));
         }
 
         Log.d(TAG, restaurants.get(position).getResId() + "");
@@ -78,7 +82,8 @@ public class RestaurantsAdpater extends ArrayAdapter<Restaurant> implements
         tvName = (TextView) view.findViewById(R.id.tv_name);
         tvMiles = (TextView) view.findViewById(R.id.tv_miles);
         tvInfo = (TextView) view.findViewById(R.id.tv_body);
-        tvRatings = (TextView) view.findViewById(R.id.tv_ratings);
+        //tvRatings = (TextView) view.findViewById(R.id.tv_ratings);
+        tvRatings = (RatingBar) view.findViewById(R.id.tv_ratings);
     }
 
     @Override

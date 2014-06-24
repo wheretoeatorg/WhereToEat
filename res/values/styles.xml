@@ -99,4 +99,9 @@
         <item name="android:background">@drawable/tv_number_bg</item>
     </style>
 
+    <style name="custom_rating_bar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingbar_custom</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 </resources>
