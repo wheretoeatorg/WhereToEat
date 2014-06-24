@@ -53,9 +53,6 @@ public class Review {
                 JSONObject rObj = jsonArr.getJSONObject(i);
                 review.author = rObj.getString("author_name");
                 review.ratingText = Html.fromHtml(rObj.getString("text")).toString();
-                if (review.ratingText.length() > 100) {
-                    review.ratingText = review.ratingText.substring(0, 100) + "...";
-                }
                 // review.time = rObj.getString("time");
                 review.timestamp = rObj.getLong("time");
                 review.time = formatedDate(review.timestamp);

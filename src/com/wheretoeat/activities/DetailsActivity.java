@@ -6,18 +6,28 @@ import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,6 +69,7 @@ public class DetailsActivity extends Activity {
     private String resId;
     private double[] coords;
     private View headerView = null;
+    private PopupWindow popWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +96,21 @@ public class DetailsActivity extends Activity {
         lvReviewsList.addHeaderView(headerView);
         lvReviewsList.setAdapter(adapter);
         refreshFavSelected();
+        lvReviewsList.setOnItemClickListener(itemClickListener);
     }
+
+    AdapterView.OnItemClickListener itemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Log.d(TAG, "itemClicked = " + position);
+            Log.d(TAG, "itemClicked = " + position);
+            if (reviews.size() >= position) {
+                Log.d(TAG, "Review  = " + reviews.get(position - 1).getRatingText());
+                onShowPopup(parent, position - 1);
+            }
+
+        }
+    };
 
     private void refreshFavSelected() {
         Log.d(TAG, "refreshFavSelected()");
@@ -145,6 +170,51 @@ public class DetailsActivity extends Activity {
             reviewCount = rest.getReviews().size();
         }
         tvReviewCount.setText(reviewCount + " Reviews");
+    }
+
+    // call this method when required to show popup
+    public void onShowPopup(View v, int listItemIndex) {
+
+        LayoutInflater layoutInflater = (LayoutInflater) getSystemService(DetailsActivity.LAYOUT_INFLATER_SERVICE);
+
+        // inflate the custom popup layout
+        final View inflatedView = layoutInflater.inflate(R.layout.custom_dialog, null, false);
+        // find the ListView in the popup layout
+        //ListView listView = (ListView) inflatedView.findViewById(R.id.commentsListView);
+        TextView tvUserRatings = (TextView) inflatedView.findViewById(R.id.tv_user_ratings);
+        TextView tvUserName = (TextView) inflatedView.findViewById(R.id.tv_user_name);
+        tvUserName.setText(reviews.get(listItemIndex).getAuthor());
+        tvUserRatings.setText(reviews.get(listItemIndex).getRatingText());
+//        Button btnOk = (Button) inflatedView.findViewById(R.id.btn_Ok);
+//        btnOk.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popWindow.dismiss();
+//            }
+//        });
+
+        // get device size
+        Display display = getWindowManager().getDefaultDisplay();
+        final Point size = new Point();
+        display.getSize(size);
+        //mDeviceHeight = size.y;
+
+
+        // fill the data to the list items
+        //setSimpleList(listView);
+
+
+        // set height depends on the device size
+        popWindow = new PopupWindow(inflatedView, (int) (size.x * 0.90), (int) (size.y * 0.50), true);
+        // set a background drawable with rounders corners
+        popWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.white_background));
+        // make it focusable to show the keyboard to enter in `EditText`
+        //popWindow.setFocusable(false);
+        // make it outside touchable to dismiss the popup window
+        popWindow.setOutsideTouchable(true);
+
+        // show the popup at bottom of the screen and set some margin at bottom ie,
+        popWindow.showAtLocation(v, Gravity.CENTER, 0, 200);
     }
 
     public void onClickFavorite(View v) {

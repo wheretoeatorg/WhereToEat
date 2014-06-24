@@ -10,6 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvDate"
+        android:lines="2"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
         android:text="Review"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/background_dark" />
