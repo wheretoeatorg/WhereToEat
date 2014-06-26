@@ -30,7 +30,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +77,7 @@ public class DetailsActivity extends Activity {
     private PopupWindow popWindow;
     private ShareActionProvider shareProvider;
     private Menu menu;
+    private RelativeLayout progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +91,9 @@ public class DetailsActivity extends Activity {
         resRef = getIntent().getStringExtra(Constants.RES_REF);
         resId = getIntent().getStringExtra(Constants.RES_ID);
         coords = getIntent().getDoubleArrayExtra(Constants.RES_LOCATION);
-
+        initViews();
         fetchDetails(resRef);
 
-        initViews();
 
         initHeaderView();
 
@@ -131,6 +133,7 @@ public class DetailsActivity extends Activity {
         tvCategories = (TextView) findViewById(R.id.tvCategories);
         tvRestaurantName = (TextView) findViewById(R.id.tvRestaurantName);
         tvAddress = (TextView) findViewById(R.id.tvAddress);
+        progressBar = (RelativeLayout) findViewById(R.id.progress_bar);
     }
 
     private void initHeaderView() {
@@ -244,7 +247,6 @@ public class DetailsActivity extends Activity {
 
     }
 
-    
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -286,8 +288,14 @@ public class DetailsActivity extends Activity {
         filOpt.setReference(ref);
 
         PlacesClient client = RestClientApplication.getPlacesClient();
-        setProgressBarIndeterminateVisibility(true);
         client.getDetails(filOpt, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onStart() {
+                //setProgressBarIndeterminateVisibility(true);
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
             @Override
             public void onSuccess(JSONObject response) {
                 Restaurant r = null;
@@ -297,7 +305,8 @@ public class DetailsActivity extends Activity {
                     e.printStackTrace();
                 }
                 setupRestaurant(r);
-                setProgressBarIndeterminateVisibility(false);
+                //setProgressBarIndeterminateVisibility(false);
+                progressBar.setVisibility(View.GONE);
                 enableButtons();
             }
 
@@ -308,7 +317,8 @@ public class DetailsActivity extends Activity {
 
             @Override
             public void onFailure(Throwable t) {
-                setProgressBarIndeterminateVisibility(false);
+                //setProgressBarIndeterminateVisibility(false);
+                progressBar.setVisibility(View.GONE);
                 Toast.makeText(DetailsActivity.this, "Restaurants details Not available",
                         Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "onFailure() : " + t);

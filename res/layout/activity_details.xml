@@ -34,4 +34,18 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvAddress"></ListView>
 
+    <RelativeLayout
+        android:id="@+id/progress_bar"
+        android:background="@android:color/white"
+        android:layout_width="match_parent"
+        android:visibility="visible"
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </RelativeLayout>
+
 </RelativeLayout>
