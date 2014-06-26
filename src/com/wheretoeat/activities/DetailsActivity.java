@@ -3,6 +3,7 @@ package com.wheretoeat.activities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +22,7 @@ import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -29,6 +31,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RatingBar;
+import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -70,6 +73,8 @@ public class DetailsActivity extends Activity {
     private double[] coords;
     private View headerView = null;
     private PopupWindow popWindow;
+    private ShareActionProvider shareProvider;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -239,11 +244,40 @@ public class DetailsActivity extends Activity {
 
     }
 
+    
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(TAG, "onCreateOptionsMenu()");
-        // getMenuInflater().inflate(R.menu.details, menu);
+        getMenuInflater().inflate(R.menu.details, menu);
         return true;
+    }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_item_share:
+                StringBuilder build = new StringBuilder();
+                build.append(tvRestaurantName.getText().toString());
+                build.append("\n");
+                build.append(tvAddress.getText().toString());
+                build.append("\n");
+                build.append(website);
+                build.append("\n");
+                build.append(phoneNumber);
+                doShare(build.toString());
+                break;
+        }
+
+        return true;
+    }
+
+    private void doShare(String infoToShare) {
+        //populate the share intent with data;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, infoToShare);
+        startActivity(intent);
     }
 
     private void fetchDetails(String ref) {
