@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -17,6 +18,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -124,15 +126,16 @@ public class FavoritesFragment extends Fragment {
                 return true;
 
             case R.id.details_item:
+                callBackHandler.onDetailSelected(rest.getResRef(), rest.getResId(), rest.getLocation());
                 return true;
             case R.id.take_notes_item:
-                View listItem = listView.getChildAt(position);
-                String resId = listItem.getTag(R.string.RES_ID_KEY).toString();
+                //View listItem = listView.getChildAt(position);
+                //String resId = listItem.getTag(R.string.RES_ID_KEY).toString();
                 Restaurant res = resList.get(position);
                 showFilterDialog();
                 tvResName.setText(res.getName());
 
-                FavoriteRestaurant favRes = getFavRestaurant(resId);
+                FavoriteRestaurant favRes = getFavRestaurant(rest.getResId());
                 if (favRes != null) {
                     String note = favRes.getNote();
                     String restId = favRes.getResId();
@@ -142,10 +145,16 @@ public class FavoritesFragment extends Fragment {
                     }
                 }
                 return true;
-            case R.id.share_item:
-                return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void doShare(String infoToShare) {
+        //populate the share intent with data;
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_TEXT, infoToShare);
+        startActivity(intent);
     }
 
     public List<Restaurant> getFavRestaurants() {

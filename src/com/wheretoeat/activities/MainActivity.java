@@ -38,6 +38,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.wheretoeat.adapters.SectionPagerAdapter;
+import com.wheretoeat.fragments.CategoriesFragment;
 import com.wheretoeat.fragments.FavoritesFragment;
 import com.wheretoeat.fragments.NearbyFragment;
 import com.wheretoeat.fragments.NearbyFragment.OnMapUpdateListener;
@@ -75,6 +76,8 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
     private SlidingBottomUpLayout layout;
     private List<Restaurant> globalResList = new ArrayList<Restaurant>();
     private List<Marker> markerList;
+    MenuItem refreshItem;
+    MenuItem filterItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,6 +153,8 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         Log.d(TAG, "onCreateOptionsMenu()");
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        filterItem = menu.findItem(R.id.action_filter);
+        refreshItem = menu.findItem(R.id.action_refresh);
         return true;
     }
 
@@ -254,20 +259,25 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
             Fragment frag = sectionPagerAdapter.getItem(position);
             List<Restaurant> resList = null;
             if (frag instanceof NearbyFragment) {
+                showMenuItems();
                 resList = ((NearbyFragment) frag).getResList();
                 Log.d(TAG, "NearbyFragment onPageSelected()");
                 listView = ((NearbyFragment) frag).getListView();
                 onMapUpdate(resList);
             } else if (frag instanceof TopRatedFragment) {
+                showMenuItems();
                 Log.d(TAG, "TopRatedFragment onPageSelected()");
                 resList = ((TopRatedFragment) frag).getResList();
                 listView = ((TopRatedFragment) frag).getListView();
                 onMapUpdate(resList);
             } else if (frag instanceof FavoritesFragment) {
+                hideMenuItems();
                 Log.d(TAG, "FavoritesFragment onPageSelected()");
                 resList = ((FavoritesFragment) frag).getResList();
                 listView = ((FavoritesFragment) frag).getListView();
                 onMapUpdate(resList);
+            } else if (frag instanceof CategoriesFragment) {
+                hideMenuItems();
             }
 
 
@@ -276,6 +286,26 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
                 setupListViewScrollListener(listView);
             }
 
+        }
+
+        private void showMenuItems() {
+            if (refreshItem != null) {
+                refreshItem.setVisible(true);
+            }
+            if (filterItem != null) {
+                filterItem.setVisible(true);
+            }
+            //invalidateOptionsMenu();
+        }
+
+        private void hideMenuItems() {
+            if (refreshItem != null) {
+                refreshItem.setVisible(false);
+            }
+            if (filterItem != null) {
+                filterItem.setVisible(false);
+            }
+            //invalidateOptionsMenu();
         }
 
         @Override
@@ -397,7 +427,6 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
             }
         });
-
     }
 
     public int getScrollY() {
