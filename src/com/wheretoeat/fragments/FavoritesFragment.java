@@ -3,6 +3,7 @@ package com.wheretoeat.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -14,7 +15,10 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -22,6 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.activeandroid.query.Delete;
@@ -93,11 +98,36 @@ public class FavoritesFragment extends Fragment {
         Log.d(TAG, "onActivityCreated()");
         adapter = new RestaurantsAdpater(getActivity(), getFavRestaurants());
         listView.setAdapter(adapter);
+        registerForContextMenu(listView);
+    }
 
-        listView.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String resId = view.getTag(R.string.RES_ID_KEY).toString();
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.res_fav_menu_items, menu);
+    }
+
+    private int position;
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        position = (int) info.id;
+        Restaurant rest = resList.get(position);
+
+        switch (item.getItemId()) {
+            case R.id.delete_item:
+                removeFavRestaurant(rest);
+                resList.remove(position);
+                adapter.notifyDataSetChanged();
+                return true;
+
+            case R.id.details_item:
+                return true;
+            case R.id.take_notes_item:
+                View listItem = listView.getChildAt(position);
+                String resId = listItem.getTag(R.string.RES_ID_KEY).toString();
                 Restaurant res = resList.get(position);
                 showFilterDialog();
                 tvResName.setText(res.getName());
@@ -111,44 +141,11 @@ public class FavoritesFragment extends Fragment {
                         etNotes.setText(note);
                     }
                 }
-
-            }
-        });
-
-        listView.setOnItemLongClickListener(new OnItemLongClickListener() {
-            private int remPos = -1;
-
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                remPos = position;
-                AlertDialog.Builder alert = new AlertDialog.Builder(getActivity());
-                alert.setPositiveButton("Remove", dialogBtnClicked);
-                alert.setNegativeButton("Cancel", dialogBtnClicked);
-                alert.create();
-                alert.show();
-                return false;
-            }
-
-            OnClickListener dialogBtnClicked = new OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        // Delete button clicked;
-                        case -1:
-                            if (remPos != -1) {
-                                Restaurant rest = resList.get(remPos);
-                                removeFavRestaurant(rest);
-                                resList.remove(remPos);
-                                adapter.notifyDataSetChanged();
-                            }
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            };
-        });
+                return true;
+            case R.id.share_item:
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     public List<Restaurant> getFavRestaurants() {
