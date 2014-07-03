@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -85,13 +86,11 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         markerList = new ArrayList<Marker>();
-
         // create Pager Adapter.
         sectionPagerAdapter = new SectionPagerAdapter(getSupportFragmentManager());
         // get ViewPager.
         viewPager = (ViewPager) findViewById(R.id.viewPagerCategory);
         page = (PagerTabStrip) findViewById(R.id.pager_title_strip);
-        page.setTabIndicatorColor(getResources().getColor(R.color.holo_blue_light));
         // Set Listener for ViewPager
         viewPager.setOnPageChangeListener(pageChangeListener);
         // Set Adapter on ViewPager
