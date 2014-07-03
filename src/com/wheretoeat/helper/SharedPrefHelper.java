@@ -140,8 +140,20 @@ public class SharedPrefHelper {
             editor.putStringSet(CATEGORIES_KEY, categoriesSet);
             editor.commit();
         }
-
     }
+
+
+    public static void removeCategoriesPrefsSet(Context context, String category) {
+        if(!TextUtils.isEmpty(category)){
+            SharedPreferences prefs = context.getSharedPreferences(DEFAULT_SHARED_PREFS, 0);
+            String[] defValues = context.getResources().getStringArray(R.array.categories);
+            Set<String> defSet = new TreeSet<String>(Arrays.asList(defValues));
+            defSet.remove(category);
+            saveCategoriesPrefsSet(context,defSet);
+        }
+    }
+
+
 
     public static void saveCategoryPrefSet(Context context,String category){
         if(!TextUtils.isEmpty(category)){

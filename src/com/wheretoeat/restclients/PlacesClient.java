@@ -70,15 +70,23 @@ public class PlacesClient {
             urlString.append(Double.toString(filOpt.getLongitude()));
         }
         if (!Utility.isStringBlank(filOpt.getName()) && !filOpt.getName().equalsIgnoreCase("All")) {
-            urlString.append("&name=" + filOpt.getName());
-        }
-        if (!Utility.isStringBlank(filOpt.getType())) {
             try {
-                String url = URLEncoder.encode("restaurant|cafe|Bar","UTF-8");
-                urlString.append("&types=" + url);
+                String name=URLEncoder.encode(filOpt.getName(),"UTF-8");
+                urlString.append("&name=" + name);
             } catch (UnsupportedEncodingException e) {
-                urlString.append("&types=" + "restaurant");
             }
+
+        }
+//        if (!Utility.isStringBlank(filOpt.getType())) {
+//            urlString.append("&types=" + filOpt.getType());
+//        }
+
+        try {
+            String types=URLEncoder.encode("restaurant|cafe|bar","UTF-8");
+            urlString.append("&types=" + types);
+        } catch (UnsupportedEncodingException e) {
+            // error encoding value use default
+            urlString.append("&types=" + "restaurant");
         }
         if (filOpt.getRadius() != 0) {
             urlString.append("&radius=" + filOpt.getRadius());
