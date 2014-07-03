@@ -10,6 +10,9 @@ import com.wheretoeat.helper.SharedPrefHelper;
 import com.wheretoeat.helper.Utility;
 import com.wheretoeat.models.FilterOptions;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 public class PlacesClient {
     private static final String TAG = "PlacesClient";
     private static PlacesClient instance;
@@ -70,7 +73,12 @@ public class PlacesClient {
             urlString.append("&name=" + filOpt.getName());
         }
         if (!Utility.isStringBlank(filOpt.getType())) {
-            urlString.append("&types=" + filOpt.getType());
+            try {
+                String url = URLEncoder.encode("restaurant|cafe|Bar","UTF-8");
+                urlString.append("&types=" + url);
+            } catch (UnsupportedEncodingException e) {
+                urlString.append("&types=" + "restaurant");
+            }
         }
         if (filOpt.getRadius() != 0) {
             urlString.append("&radius=" + filOpt.getRadius());

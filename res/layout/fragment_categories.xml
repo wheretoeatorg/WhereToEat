@@ -5,7 +5,6 @@
 
     <ListView
         android:id="@+id/lv_categories"
-        style="@style/custom_list_view2"
-        android:entries="@array/categories" />
+        style="@style/custom_list_view2" />
 
 </RelativeLayout>

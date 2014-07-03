@@ -22,6 +22,7 @@
         <item name="italian">Italian</item>
         <item name="Pizza">Pizza</item>
         <item name="burger">Burger</item>
+        <item name="burger">Starbucks</item>
     </string-array>
 
     <string name="RES_REF_KEY">001</string>

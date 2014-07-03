@@ -54,7 +54,7 @@ public class MainActivity extends FragmentActivity implements OnMapUpdateListene
 
     private static final String TAG = "MainFragmentActivity";
     private static int DETAILS_REQUEST_CODE = 1;
-    final static int ZOOM_LEVEL = 12;
+    final static int ZOOM_LEVEL = 15;
     private SectionPagerAdapter sectionPagerAdapter;
     private ViewPager viewPager;
     private GoogleMap googleMap;

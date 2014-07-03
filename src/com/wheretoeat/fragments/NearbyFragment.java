@@ -163,7 +163,7 @@ public class NearbyFragment extends Fragment {
         double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
         PlacesClient client = RestClientApplication.getPlacesClient();
         FilterOptions filterOptions = new FilterOptions();
-        filterOptions.setType("restaurant");
+        filterOptions.setType("restaurant|food");
         filterOptions.setRankby(Rankby.distance);
         filterOptions.setLatitude(coords[0]);
         filterOptions.setLongitude(coords[1]);

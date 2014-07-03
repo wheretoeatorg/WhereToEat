@@ -1,4 +1,3 @@
-
 package com.avgtechie.slidinguppanel;
 
 import android.content.Context;

@@ -1,11 +1,18 @@
-
 package com.wheretoeat.helper;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.text.TextUtils;
 
+import com.wheretoeat.activities.R;
 import com.wheretoeat.models.Filters;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class SharedPrefHelper {
 
@@ -20,6 +27,7 @@ public class SharedPrefHelper {
     private static final String LAST_LONGITUDE_KEY = "logitude";
     public static final String NONE = "none";
     private static final String SEARCH_NAME_KEY = "search_name_key";
+    private static final String CATEGORIES_KEY = "categories";
 
     public static void AddFiltersSharedPrefs(Filters filters, Context context) {
         SharedPreferences prefs = context.getSharedPreferences(DEFAULT_SHARED_PREFS, 0);
@@ -123,6 +131,37 @@ public class SharedPrefHelper {
     public static boolean getOpenNowPref(Context context) {
         SharedPreferences prefs = context.getSharedPreferences(DEFAULT_SHARED_PREFS, 0);
         return prefs.getBoolean(OPEN_NOW_KEY, true);
+    }
+
+    public static void saveCategoriesPrefsSet(Context context, Set<String> categoriesSet) {
+        if (categoriesSet != null && categoriesSet.size() > 0) {
+            SharedPreferences prefs = context.getSharedPreferences(DEFAULT_SHARED_PREFS, 0);
+            Editor editor = prefs.edit();
+            editor.putStringSet(CATEGORIES_KEY, categoriesSet);
+            editor.commit();
+        }
+
+    }
+
+    public static void saveCategoryPrefSet(Context context,String category){
+        if(!TextUtils.isEmpty(category)){
+            SharedPreferences prefs = context.getSharedPreferences(DEFAULT_SHARED_PREFS, 0);
+            String[] defValues = context.getResources().getStringArray(R.array.categories);
+            Set<String> defSet = new TreeSet<String>(Arrays.asList(defValues));
+            defSet.addAll(prefs.getStringSet(CATEGORIES_KEY,defSet));
+            defSet.add(category);
+            saveCategoriesPrefsSet(context,defSet);
+        }
+    }
+
+    public static List<String> getCategoriesPrefs(Context context) {
+        SharedPreferences prefs = context.getSharedPreferences(DEFAULT_SHARED_PREFS, 0);
+        String[] defValues = context.getResources().getStringArray(R.array.categories);
+        Set<String> defSet = new TreeSet<String>(Arrays.asList(defValues));
+        defSet.addAll(prefs.getStringSet(CATEGORIES_KEY,defSet));
+        ArrayList<String> list = new ArrayList<String>();
+        list.addAll(defSet);
+        return list;
     }
 
 }

@@ -139,7 +139,7 @@ public class TopRatedFragment extends Fragment {
         double[] coords = GoogleMapHelper.getCurrentlocation(getActivity());
         PlacesClient client = RestClientApplication.getPlacesClient();
         FilterOptions filOpt = new FilterOptions();
-        filOpt.setType("restaurant");
+        filOpt.setType("restaurant|food");
         filOpt.setLatitude(coords[0]);
         filOpt.setLongitude(coords[1]);
         filOpt.setRadius(5000);
