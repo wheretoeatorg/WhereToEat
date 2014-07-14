@@ -24,9 +24,7 @@ import com.wheretoeat.activities.R;
 import com.wheretoeat.fragments.NearbyFragment.OnMapUpdateListener;
 import com.wheretoeat.helper.SharedPrefHelper;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CategoriesFragment extends Fragment {
 
@@ -46,7 +44,6 @@ public class CategoriesFragment extends Fragment {
         if (activity instanceof OnMapUpdateListener) {
             callBackHandler = (OnMapUpdateListener) activity;
         }
-
     }
 
     @Override
@@ -65,8 +62,8 @@ public class CategoriesFragment extends Fragment {
         });
         categories = SharedPrefHelper.getCategoriesPrefs(getActivity());
         adapter = new CategoriesAdapter(getActivity(), categories);
-        listView.setAdapter(adapter);
         listView.addFooterView(footerView);
+        listView.setAdapter(adapter);
         listView.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -128,11 +125,11 @@ public class CategoriesFragment extends Fragment {
         switch (responseType) {
             case ALREADY_EXIST:
                 lblErrorView.setVisibility(View.VISIBLE);
-                lblErrorView.setText("Restaurant already exist,Try another?");
+                lblErrorView.setText("Category already exist,Try another?");
                 break;
             case EMPTY:
                 lblErrorView.setVisibility(View.VISIBLE);
-                lblErrorView.setText("Restaurant type can't be empty.");
+                lblErrorView.setText("Category type can't be empty.");
                 break;
             case VALID:
                 lblErrorView.setVisibility(View.GONE);
